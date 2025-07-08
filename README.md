@@ -1,3 +1,7 @@
-This repository contains all the software used in creating my super-capacitor bike.
+This repository contains the fimware I developed for my super-capacitor bike.
 
-*Note: This part of the project has been put on the back-burner, as ordering & testing the prototype PCB is my biggest priority at the moment*
+Hello everyone, 
+
+It has been a while, but I am happy to say, I am still working on the project!
+
+More updates soon...

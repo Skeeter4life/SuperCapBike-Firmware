@@ -1,0 +1,5 @@
+*.atsln
+SuperCapBike-Firmware-ATMEGA328/Debug/
+SuperCapBike-Firmware-ATMEGA328/SuperCapBike-Firmware-ATMEGA328.componentinfo.xml
+SuperCapBike-Firmware-ATMEGA328/SuperCapBike-Firmware-ATMEGA328.cproj
+SuperCapBike-Firmware-ATMEGA328/.vs/
