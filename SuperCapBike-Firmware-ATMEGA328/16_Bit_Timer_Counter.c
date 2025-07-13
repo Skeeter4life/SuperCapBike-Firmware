@@ -6,6 +6,7 @@
  */ 
 
 // Note/Reminder: The constexpr keyword was not added until the C23 standard
+// Some may find my commenting superfluous, but I just want to make sure I am being clear... :)
 
 //------- Includes:
 #include <avr/io.h>
@@ -13,42 +14,42 @@
 
 //------- Bool Definition:
 #define bool uint8_t
-#define true 1
+#define true 1 // I believe this defaults to an int, which is 1 byte in AVR C?
 #define false 0
 
 //------- ATMEGA328 Clock:
 const uint32_t F_CLK = 8000000;
 
 //------- Units (u_):
+
 const uint32_t u_MicroSeconds = 1000000; // u_ defines a unit 
 const uint16_t u_MiliSeconds = 1000;
 const uint8_t u_Seconds = 1;
 
 
-//------- Globals:
-volatile unsigned long System_clock = 0; // Each tick is 1 defined by Configure_Timer
-unsigned long Current_clock = 0;
+//------- Timer Globals:
 
-volatile int64_t Remaining_Ticks = 0;
-volatile int64_t Raw_Ticks = 0;
+volatile uint64_t System_Ticks = 0; // Each tick is 1 defined by Configure_Timer
+volatile int32_t Remaining_Ticks = 0;
+volatile int32_t Calculated_Ticks = 0; 
 
-ISR(TIMER1_COMPA_vect){ // Danger of an interrupt being missed
+ISR(TIMER1_COMPA_vect){ 
 		
 	if(Remaining_Ticks == 0){
 		
-		System_clock++;
-		PORTB ^= (1 << PORTB0); // Visual debug
+		System_Ticks++;
+		PORTB ^= (1 << PORTB0);
 		
-		Remaining_Ticks = Raw_Ticks; 
+		Remaining_Ticks = Calculated_Ticks; // Reset the counter
 		
 	}else{
 		
-		Remaining_Ticks -= 65536; // I feel like this is one of the rare cases It makes sense do stuff in an ISR
+		Remaining_Ticks -= 65536; // Tricky! 65536 Ticks as it rolls over back to 0 :).
 			
-		if(Remaining_Ticks < 65536){
+		if(Remaining_Ticks <= 65535){
 
-			OCR1AH = ((Remaining_Ticks - 1) >> 8) & 0xFF;
-			OCR1AL = ((Remaining_Ticks - 1) & 0xFF);
+			OCR1AH = ((Remaining_Ticks) >> 8) & 0xFF; // Ah hmmm...
+			OCR1AL = (Remaining_Ticks) & 0xFF;
 			Remaining_Ticks = 0;
 
 				
@@ -58,31 +59,31 @@ ISR(TIMER1_COMPA_vect){ // Danger of an interrupt being missed
 	
 }
 
-int Configure_Timer_Step(uint16_t Time, unsigned int Units){ // Step is in seconds (Cool concept, but has an error of .5 unit maximum)
+bool Configure_Timer_Tick(uint16_t Time, uint32_t Units){ // All relevent types were optimized by calculating the largest possible values to Configure_Timer_Step()
 	
-	System_clock = 0;
-	Current_clock = 0;
-
-	uint8_t Shift_Amount = 4; // Everything is 16* as large
-	uint8_t Shift_Mask = (1 << Shift_Amount) - 1;
+	System_Ticks = 0; // Reset the system ticks
+	
+	uint64_t Numerator = Time * F_CLK;
+	
+	uint64_t Scaled_Ticks = Numerator / Units; // How many times we have to count for the requested time to have passed at the current clock frequency
+	
+	TIMSK1 |= (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
+		
 	uint16_t Prescaler = 1;
-	
-	uint64_t Scaled_Ticks = Time * F_CLK / Units;
-
-	TIMSK1 |= (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enable interrupts on Output Compare Match Port A
+	uint32_t Calculated_Prescaler = Scaled_Ticks/65535; // Calculates the prescaler required to ensure that OCR1A is <= 65535
 		
-	uint64_t Raw_Prescaler = Scaled_Ticks/65535; // Calculates the prescaler required to ensure that OCR1A is <= 65535 (How many ticks per unit * time) divided by max 16 bit unsigned value
+	if(Calculated_Prescaler > 1024){
 		
-	if(Raw_Prescaler > 1024){ // The Time will overflow the 16bit timer
+		 // The required count will overflow 16bits even with the largest available prescaler 
 		
-		Remaining_Ticks = Scaled_Ticks/1024;
-		Raw_Ticks = Scaled_Ticks/1024;
+		Calculated_Ticks = (Scaled_Ticks >> 10); // Divide by 1024
+		Remaining_Ticks = Calculated_Ticks; 
 		
 		TCCR1B = (1 << CS12) | (1 << CS10) | (1 << WGM12); // Set prescaler to 1024
 		OCR1AH = 0xFF;
 		OCR1AL = 0xFF; // Timer begins
 
-		return 1;
+		return true;
 		
 	}else{
 		
@@ -90,7 +91,7 @@ int Configure_Timer_Step(uint16_t Time, unsigned int Units){ // Step is in secon
 		
 		for(uint8_t i = 0; i <= 4; i++){  // Logic to ensure that the Raw_Count <= uint16_t
 			
-			if(Clock_Dividers[i] >= Raw_Prescaler){
+			if(Clock_Dividers[i] >= Calculated_Prescaler){
 				Prescaler = Clock_Dividers[i];
 				break;
 			}
@@ -119,30 +120,16 @@ int Configure_Timer_Step(uint16_t Time, unsigned int Units){ // Step is in secon
 	
 	TCCR1B |= (1 << WGM12); // Normal port operation until here
 	
-	unsigned long F_CLK_Shifted = F_CLK << Shift_Amount; // Used for fixed point arithmetic
 	
-	uint32_t F_Tick = (F_CLK_Shifted)/Prescaler; // Frequency that the timer actually ticks at
-
-	uint64_t TOP_Temp = Time * F_Tick / Units; // How many increments there will be in Time units (seconds, milliseconds, microseconds)
-
-	uint64_t TOP = (TOP_Temp >> Shift_Amount);
-
-	if((TOP_Temp & Shift_Mask) >= 8){ // Round up (Top_TEMP & First digit)
-		
-		if(TOP != 0xFFFF){ // This enforces the "error of 0.5 a unit" ********
-			TOP++;
-		}
-		
-	}
-
-	if(TOP <= 0){
-		return 0; // Failed, adjust TCCR1B
-	}
+	// Rounding integer division (A new trick I learned) reduces error of Timer_Top ideally to +- 0.5:
 	
-	OCR1AH = (TOP >> 8) & 0xFF;
-	OCR1AL = (TOP & 0xFF); // Timer begins
+	uint32_t Denomenator = Prescaler * Units;
+	uint16_t Timer_Top = (Numerator + (Denomenator/2)) / Denomenator;
+	
+	OCR1AH = (Timer_Top >> 8) & 0xFF;
+	OCR1AL = (Timer_Top & 0xFF); // Timer begins
 
-	return 1;
+	return true;
 
 }
 
@@ -150,18 +137,29 @@ int Configure_Timer_Step(uint16_t Time, unsigned int Units){ // Step is in secon
 
 	NOTES:
 	
-	Works best when F_CPU is 1MHZ or a multiple of 2. 
+	Works best when F_CLK is 1MHZ or a multiple of 2. 
 	Min F_CLK = 1MHZ
 	Max F_CLK = 20MHZ
 	
+	Can use timer overflow flag to emulate it as a 17 bit timer
+	
+	Time domain t: t E Z, {0 <= t <= 65535}
+		
+	Possible for the timer to be inaccurate if other non-interruptible interrupts are being used.
+	
 	EDGE CASES:
 	
-	Time domain t: t ? Z, {0 <= t <= 65535}
+	1) Timer ISR overhead: Tested with F_CLK = 8MHz: The logic in the timer ISR takes 20us to be executed. 
+	Timer ISR overhead: Compiled with -O2. -O0 takes 30us.
+	
+	2) Calculated_Prescaler > 1024 case does not seem to work properly. 
+	
 	
 	POTENTIAL FIXES:
 	
-	Can make 17 bit
-	Add additional logic -> simple division? (fixed point arithmitic)
+	1) Try to further optimize the ISR	
+	
+	2) Continue to debug
 
 */
 
@@ -173,8 +171,9 @@ int main(void)
 	DDRB |= (1 << DDB0);
 	DDRB |= (1 << DDB1);
 
-	int8_t x = Configure_Timer_Step(1, u_MiliSeconds);
-	if(x < 0){ // Error state
+	bool Timer_Config_Success = Configure_Timer_Tick(10, u_Seconds);
+	
+	if(Timer_Config_Success == false){ // Error state (Redundant as of now, as Timer_Config_Success will only return true. Will be changed.)
 		//PORTB |= (1<<PORTB0);
 	}
 
@@ -184,4 +183,10 @@ int main(void)
 	return 0;
 }
 
-//avrdude -c usbtiny -p m328 -U ?:?:"C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328\SuperCapBike-Firmware-ATMEGA328\Debug\SuperCapBike-Firmware-ATMEGA328.hex":?
+/*
+avrdude -c usbtiny -p m328 -U ?:?:"C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328\Debug\SuperCapBike-Firmware-ATMEGA328.hex":?
+*/
+
+/*
+cd C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328
+*/
