@@ -18,7 +18,7 @@
 #define false 0
 
 //------- ATMEGA328 Clock:
-const uint32_t F_CLK = 8000000;
+const uint32_t F_CLK = 16000000;
 
 //------- Units (u_):
 
@@ -30,30 +30,37 @@ const uint8_t u_Seconds = 1;
 //------- Timer Globals:
 
 volatile uint64_t System_Ticks = 0; // Each tick is 1 defined by Configure_Timer
+
+volatile int32_t Calculated_Ticks = 0;
 volatile int32_t Remaining_Ticks = 0;
-volatile int32_t Calculated_Ticks = 0; 
 
 ISR(TIMER1_COMPA_vect){ 
+	
+	PORTB |= (1 << PORTB0);
 		
 	if(Remaining_Ticks == 0){
+				
+		System_Ticks++; // This operation is hilariously slow
 		
-		System_Ticks++;
-		PORTB ^= (1 << PORTB0);
-		
+		PORTB &= ~(1 << PORTB0);
 		Remaining_Ticks = Calculated_Ticks; // Reset the counter
+		OCR1A = 0xFFFF; 
 		
 	}else{
-		
-		Remaining_Ticks -= 65536; // Tricky! 65536 Ticks as it rolls over back to 0 :).
-			
+					
 		if(Remaining_Ticks <= 65535){
 
-			OCR1AH = ((Remaining_Ticks) >> 8) & 0xFF; // Ah hmmm...
-			OCR1AL = (Remaining_Ticks) & 0xFF;
+			OCR1AH = (Remaining_Ticks >> 8) & 0xFF;
+			OCR1AL = Remaining_Ticks & 0xFF;
 			Remaining_Ticks = 0;
 
 				
+		}else{
+			
+			Remaining_Ticks -= 65536; // Tricky! 65536 Ticks as it rolls over back to 0 :).
+			
 		}
+		
 		
 	}
 	
@@ -65,7 +72,7 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Units){ // All relevent types 
 	
 	uint64_t Numerator = Time * F_CLK;
 	
-	uint64_t Scaled_Ticks = Numerator / Units; // How many times we have to count for the requested time to have passed at the current clock frequency
+	uint64_t Scaled_Ticks = Numerator / (Units << 1); // How many times we have to count for the requested time to have passed at the current clock frequency
 	
 	TIMSK1 |= (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
 		
@@ -118,8 +125,7 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Units){ // All relevent types 
 			break;
 	}
 	
-	TCCR1B |= (1 << WGM12); // Normal port operation until here
-	
+	TCCR1B |= (1 << WGM12); // Normal port operation until here	
 	
 	// Rounding integer division (A new trick I learned) reduces error of Timer_Top ideally to +- 0.5:
 	
@@ -137,30 +143,32 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Units){ // All relevent types 
 
 	NOTES:
 	
-	Works best when F_CLK is 1MHZ or a multiple of 2. 
-	Min F_CLK = 1MHZ
+	1) Works best when F_CLK is 1MHZ or a multiple of 2. 
+	Min F_CLK = 1MHZ (TO BE TESTED WITH 128kHz)
 	Max F_CLK = 20MHZ
 	
-	Can use timer overflow flag to emulate it as a 17 bit timer
+	2) Can use timer overflow flag to emulate it as a 17 bit timer
 	
-	Time domain t: t E Z, {0 <= t <= 65535}
+	3) Time domain t: t E Z, {0 <= t <= 65535}
 		
-	Possible for the timer to be inaccurate if other non-interruptible interrupts are being used.
+	4) Possible for the timer to be inaccurate if other non-interruptible interrupts are being used.
+	
+	5) The internal crystal oscillator has some pretty intense clock jitter. Its frequency also has an error of +10% Oscillator must be calibrated. 
 	
 	EDGE CASES:
 	
-	1) Timer ISR overhead: Tested with F_CLK = 8MHz: The logic in the timer ISR takes 20us to be executed. 
-	Timer ISR overhead: Compiled with -O2. -O0 takes 30us.
-	
-	2) Calculated_Prescaler > 1024 case does not seem to work properly. 
-	
-	
+	1) Timer ISR overhead: Tested with F_CLK = 8MHz: The logic in the timer ISR takes 20us to be executed, Compiled with -O2. 
+	   When compiled with -O0, the ISR overhead is 30us.
+		
 	POTENTIAL FIXES:
 	
 	1) Try to further optimize the ISR	
 	
-	2) Continue to debug
+*/
 
+/* MEASUREMENTS:
+	~5us @ 16MHZ, no conditionals for scaled ticks > 1024 -O0
+	~4us @ 16MHZ, no conditionals for scaled ticks > 1024 -03
 */
 
 int main(void)
@@ -170,8 +178,8 @@ int main(void)
 	
 	DDRB |= (1 << DDB0);
 	DDRB |= (1 << DDB1);
-
-	bool Timer_Config_Success = Configure_Timer_Tick(10, u_Seconds);
+	
+	bool Timer_Config_Success = Configure_Timer_Tick(1, u_MicroSeconds);
 	
 	if(Timer_Config_Success == false){ // Error state (Redundant as of now, as Timer_Config_Success will only return true. Will be changed.)
 		//PORTB |= (1<<PORTB0);
