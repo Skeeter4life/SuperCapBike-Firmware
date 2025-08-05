@@ -1,44 +1,22 @@
 /*
  * 16Bit_Timer_Counter.c
  *
- * Created: 2025-06-25 8:21:05 PM
  * Author : Andrew
  */ 
 
 // Note/Reminder: The constexpr keyword was not added until the C23 standard
 // Some may find my commenting superfluous, but I just want to make sure I am being clear... :)
 
-//------- Includes:
-#include <stdint.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-
-//------- Bool Definition:
-
-#define bool uint8_t
-#define true 1
-#define false 0
-
-//------- Timer/Counter Clock:
-
-const uint32_t F_CLK = 16000000;
-const uint32_t TC_CLK = 16000000; // TC_CLK can be asynchronous to F_CLK. 
+#include "../Headers/Includes.h"
+#include "../Headers/Timer_Counter.h"
 
 // Interesting note here: TC_CLK = F_CLK will not compile.
 
 //------- Units (u_):
 
-const uint32_t u_MicroSeconds = 1000000; // u_ defines a unit 
+const uint32_t u_MicroSeconds = 1000000; // u_ defines a unit
 const uint16_t u_MiliSeconds = 1000;
 const uint8_t u_Seconds = 1;
-
-//------- Timer Globals:
-
-enum Timers{
-	_16_bit = 0,
-	_8_bit1 = 1,
-	_8_bit2 = 2
-};
 
 volatile uint64_t System_Ticks[3] = {0, 0, 0}; // Each tick is defined by Configure_Timer
 volatile uint32_t Calculated_Ticks[3] = {0, 0, 0};
@@ -127,7 +105,7 @@ ISR(TIMER1_COMPA_vect){
 }
 
 
-bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, uint8_t Timer){ // All relevent types were optimized by calculating the largest possible values to Configure_Timer_Step()
+bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All relevent types were optimized by calculating the largest possible values to Configure_Timer_Step()
 	
 	if(TC_CLK == 0){ 
 		return false;
@@ -446,49 +424,4 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, uint8_t Timer){ // All r
 /* MEASUREMENTS:
 	~5us @ 16MHZ, no conditionals for scaled ticks > 1024 -O0
 	~4us @ 16MHZ, no conditionals for scaled ticks > 1024 -03
-*/
-
-int main(void)
-{
-	
-	sei();
-	
-	DDRB |= (1 << DDB0);
-	DDRB |= (1 << DDB1);
-	DDRD |= (1 << DDD7);
-	DDRD |= (1 << DDD6);
-	
-	//bool Precisie_Mode = true;
-	
-	uint8_t Timer1 = _8_bit1;
-	
-	bool Timer1_Set = Configure_Timer_Tick(100, u_MiliSeconds, Timer1);
-	
-	uint8_t Timer2 = _8_bit2;
-	
-	bool Timer2_Set = Configure_Timer_Tick(10, u_MicroSeconds, Timer2);
-	
-	uint8_t Timer3 = _16_bit;
-	
-	bool Timer3_Set = Configure_Timer_Tick(3, u_Seconds, Timer3);
-	
-	if(!Timer1_Set || !Timer2_Set || !Timer3_Set){ 
-		PORTB = (1 << PORTB1); 
-	}
-
-	while (1){
-		
-	}
-	
-	return 0;
-}
-
-/*
-avrdude -c usbtiny -p m328 -U ?:?:"C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328\Debug\SuperCapBike-Firmware-ATMEGA328.hex":?
-*/
-
-// ^^ I use an ATMEL ICE, but I also have a usbtiny programmer.
-
-/*
-cd C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328
 */
