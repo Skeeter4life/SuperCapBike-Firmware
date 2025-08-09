@@ -23,9 +23,14 @@ typedef enum{
 	Device2
 }Devices;
 
-extern int8_t SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order);
-extern int8_t SPI_Passive_Init();
-extern int SPI_Transmit(uint8_t Data, Devices Device);
+typedef enum SPI_Status{
+	SPI_OK,
+	SPI_FAULT	
+}SPI_Status;
+
+extern SPI_Status SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order);
+extern SPI_Status SPI_Passive_Init();
+extern SPI_Status SPI_Transmit(uint8_t Data, Devices Device);
 
 
 #endif /* SPI_H_ */

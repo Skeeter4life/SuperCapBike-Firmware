@@ -6,6 +6,8 @@ EEPROM\EEPROM.c
 
 EEPROM\EEPROM_Driver.S
 
+I2C\I2C_Driver.c
+
 main.c
 
 Ring_Buffer\Dynamic_Ring_Buffer.c

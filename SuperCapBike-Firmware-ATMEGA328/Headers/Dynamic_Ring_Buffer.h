@@ -10,9 +10,9 @@
 
 typedef enum Ring_Buffer_Status{
 	
-	OK = 1,
-	EMPTY = 0,
-	FAULT = -1
+	BUFFER_OK,
+	BUFFER_EMPTY,
+	BUFFER_FAULT 
 	
 }Ring_Buffer_Status;
 

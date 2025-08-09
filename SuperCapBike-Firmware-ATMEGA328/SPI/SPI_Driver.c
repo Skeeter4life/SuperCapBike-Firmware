@@ -9,9 +9,9 @@
 
 // For my use case, I don't ever see the need of reading data from a secondary device. So, none of that logic is implemented here.
 
-int8_t SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order){
+SPI_Status SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order){
 	
-	// Im not too worried about clock phase or polarity
+	// I am not too worried about clock phase or polarity
 	
 	DDRB |= (1 << PORTB5) | (1 << PORTB3); // SCK and MOSI set as outputs
 	
@@ -75,26 +75,26 @@ int8_t SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order){
 			
 			// Same as case 4, of course.
 			
-			return -1;
+			return SPI_FAULT;
 	}
 	
 	SPI_Config = Main;
-	return 1;
+	return SPI_OK;
 			
 }
 
-int8_t SPI_Passive_Init(){ // Not receiving. Useful for re-programming over SPI
+SPI_Status SPI_Passive_Init(){ // Not receiving. Useful for re-programming over SPI
 	
 	DDRB &= ~((1 << PORTB5) | (1 << PORTB4) | (1 << PORTB3));
 	SPI_Config = Passive;
-	return 1; // Keep it consistent 
+	return SPI_OK; // Keep it consistent 
 	
 }
 
-int SPI_Transmit(uint8_t Data, Devices Device){
+SPI_Status SPI_Transmit(uint8_t Data, Devices Device){
 	
 	if(SPI_Config != Main){
-		return -1;
+		return SPI_FAULT;
 	}
 	
 	switch(Device){ // Handle SS
@@ -110,6 +110,6 @@ int SPI_Transmit(uint8_t Data, Devices Device){
 	}
 	
 	SPDR = Data;
-	return 1;
+	return SPI_OK;
 	
 }

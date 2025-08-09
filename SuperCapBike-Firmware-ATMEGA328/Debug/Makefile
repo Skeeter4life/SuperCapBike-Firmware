@@ -35,6 +35,7 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../EEPROM \
 ../Headers \
+../I2C \
 ../Ring_Buffer \
 ../Timer_Counter \
 ../SPI/
@@ -43,6 +44,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../EEPROM/EEPROM.c \
+../I2C/I2C_Driver.c \
 ../main.c \
 ../Ring_Buffer/Dynamic_Ring_Buffer.c \
 ../SPI/SPI_Driver.c \
@@ -59,6 +61,7 @@ ASM_SRCS +=
 OBJS +=  \
 EEPROM/EEPROM.o \
 EEPROM/EEPROM_Driver.o \
+I2C/I2C_Driver.o \
 main.o \
 Ring_Buffer/Dynamic_Ring_Buffer.o \
 SPI/SPI_Driver.o \
@@ -67,6 +70,7 @@ Timer_Counter/Timer_Counter_Driver.o
 OBJS_AS_ARGS +=  \
 EEPROM/EEPROM.o \
 EEPROM/EEPROM_Driver.o \
+I2C/I2C_Driver.o \
 main.o \
 Ring_Buffer/Dynamic_Ring_Buffer.o \
 SPI/SPI_Driver.o \
@@ -75,6 +79,7 @@ Timer_Counter/Timer_Counter_Driver.o
 C_DEPS +=  \
 EEPROM/EEPROM.d \
 EEPROM/EEPROM_Driver.d \
+I2C/I2C_Driver.d \
 main.d \
 Ring_Buffer/Dynamic_Ring_Buffer.d \
 SPI/SPI_Driver.d \
@@ -83,6 +88,7 @@ Timer_Counter/Timer_Counter_Driver.d
 C_DEPS_AS_ARGS +=  \
 EEPROM/EEPROM.d \
 EEPROM/EEPROM_Driver.d \
+I2C/I2C_Driver.d \
 main.d \
 Ring_Buffer/Dynamic_Ring_Buffer.d \
 SPI/SPI_Driver.d \
@@ -103,6 +109,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 EEPROM/EEPROM.o: ../EEPROM/EEPROM.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+I2C/I2C_Driver.o: ../I2C/I2C_Driver.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

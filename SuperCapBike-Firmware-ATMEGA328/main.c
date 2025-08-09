@@ -9,6 +9,7 @@
 #include "Headers/EEPROM.h"
 #include "Headers/Timer_Counter.h"
 #include "Headers/Dynamic_Ring_Buffer.h"
+#include "Headers/I2C.h"
 
 const uint32_t F_CLK = 16000000;
 const uint32_t TC_CLK = 16000000; // TC_CLK can be asynchronous to F_CLK.
@@ -55,17 +56,24 @@ int main(void)
 	
 	Init_Buffer(&Buffer1, 10, 2);
 	
-	Write_to_Buffer(&Buffer1, 0xFF);
-	
-	Write_to_Buffer(&Buffer1, 0xFE); 
-		
-	Read_from_Buffer(&Buffer1, &Received_Data);
-	
-	Read_from_Buffer(&Buffer1, &Received_Data);
+	for(uint8_t i = 0; i <= 30; i++){
+		Write_to_Buffer(&Buffer1, i);
+		Read_from_Buffer(&Buffer1, &Received_Data);
+	}
 	
 	Free_Buffer(&Buffer1); // Buffer functionality Verified with debugger. More rigorous testing soon.
 	
+	TWI_Data MCP23017;
+	
+	Init_TWI(&MCP23017, MCP23017_Address, 0x00, WRITING_MODE, 0b10101010);
+	
 	while (1 == true){
+		
+		if(TWI_Ready){
+			
+			TWI_Handler(&MCP23017);
+			
+		}
 
 	}
 	
