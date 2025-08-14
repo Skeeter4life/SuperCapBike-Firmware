@@ -1,5 +1,5 @@
 /*
- * 16Bit_Timer_Counter.c
+ * Timer_Counter_Driver.c
  *
  * Author : Andrew
  */ 
@@ -21,6 +21,8 @@ const uint8_t u_Seconds = 1;
 volatile uint64_t System_Ticks[3] = {0, 0, 0}; // Each tick is defined by Configure_Timer
 volatile uint32_t Calculated_Ticks[3] = {0, 0, 0};
 volatile uint32_t Remaining_Ticks[3] = {0, 0, 0};
+	
+Timer_Modes Modes[3] = {TIMER_NONE, TIMER_NONE, TIMER_NONE};
 
 //------- Timer Definitions:
 
@@ -60,7 +62,7 @@ ISR(TIMER2_COMPA_vect){
 
 		if(Calculated_Ticks[_8_bit2] > 0){
 			
-			Remaining_Ticks[_8_bit2] = Calculated_Ticks[_8_bit2]; // Reset the counter
+			Remaining_Ticks[_8_bit2] = Calculated_Ticks[_8_bit2]; 
 			OCR2A = 0xFF;
 			
 		}
@@ -104,19 +106,132 @@ ISR(TIMER1_COMPA_vect){
 	
 }
 
+Timer_Status Set_Prescaler(Timers Timer, uint16_t Prescaler){
+	
+	switch(Timer){
+		
+		case _16_bit:
+		
+			switch(Prescaler){ // Don't need to clear TCCRxB, as it will be assigned:
+				
+				case 1:
+				
+				TCCR1B |= (1 << CS10);
+				break;
+				
+				case 8:
+				
+				TCCR1B |= (1 << CS11);
+				break;
+				
+				case 64:
+				
+				TCCR1B |= (1 << CS11) | (1 << CS10);
+				break;
+				
+				case 256:
+				
+				TCCR1B |= (1 << CS12);
+				break;
+				
+				case 1024:
+				
+				TCCR1B |= (1 << CS12) | (1 << CS10);
+				break;
+				
+			}
+			
+			break;
+		
+		case _8_bit1:
+		
+			switch(Prescaler){
+				
+				case 1:
+				
+				TCCR0B |= (1 << CS00);
+				break;
+				
+				case 8:
+				
+				TCCR0B |= (1 << CS01);
+				break;
+				
+				case 64:
+				
+				TCCR0B |= (1 << CS01) | (1 << CS00);
+				break;
+				
+				case 256:
+				
+				TCCR0B |= (1 << CS02);
+				break;
+				
+				case 1024:
+				
+				TCCR0B |= (1 << CS02) | (1 << CS00);
+				break;
+				
+			}
+			
+			break;
+		
+		case _8_bit2:
+		
+			switch(Prescaler){
+				
+				case 1:
+				
+				TCCR2B |= (1 << CS20);
+				break;
+				
+				case 8:
+				
+				TCCR2B |= (1 << CS21);
+				break;
+				
+				case 64:
+				
+				TCCR2B |= (1 << CS22);
+				break;
+				
+				case 256:
+				
+				TCCR2B |= (1 << CS22) |  (1<<CS21);
+				break;
+				
+				case 1024:
+				
+				TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20);
+				break;
+				
+			}
+			
+			break;
+		
+		default:
+		
+			return TIMER_FAULT;
 
-bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All relevent types were optimized by calculating the largest possible values to Configure_Timer_Step()
+	}
+	
+	return TIMER_OK;
+	
+}
+
+
+Timer_Status Configure_Timer(uint16_t Time, uint32_t Unit, Timers Selected_Timer){ // All relevent types were optimized by calculating the largest possible values to Configure_Timer_Step()
 	
 	if(TC_CLK == 0){ 
-		return false;
+		return TIMER_FAULT;
 	}
 	
 	if(Unit == 0){
-		return false;
+		return TIMER_FAULT;
 	}
 	
 	if((uint64_t)TC_CLK * Time/Unit <= Max_ISR_Cycles){ // If the requested tick is shorter than or equal to the max time it takes to increment System_Ticks, return error state
-		return false;
+		return TIMER_FAULT;
 	}
 	
 	//uint32_t Adjusted_Cycles = 0; // Won't overflow even with a 1Hz clock
@@ -132,12 +247,12 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 	// Disable the timer interrupts as the timer is being re-configured:
 
 	uint64_t Numerator = Time * TC_CLK;
-	uint64_t Scaled_Ticks = Numerator / (Unit); // How many times we have to count for the requested time to have passed at the current clock frequency
+	uint64_t Scaled_Ticks = Numerator / Unit; // How many times we have to count for the requested time to have passed at the current clock frequency
 	
 	uint16_t Prescaler = 0;
 	uint32_t Calculated_Prescaler = 0; // Ensures that OCRxA is <= (2^n - 1)
 	
-	switch(Timer){
+	switch(Selected_Timer){
 		
 		case _16_bit:
 			
@@ -165,7 +280,7 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 			
 		default:
 		
-			return false;
+			return TIMER_FAULT;
 		
 	}
 
@@ -173,12 +288,14 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 	if(Calculated_Prescaler > 1024){  // The required count will overflow the selected timer, even with the largest available prescaler
 
 		Prescaler = 1024;
-		//Adjusted_Cycles = (((TC_CLK + (F_CLK*Prescaler/2))/F_CLK*Prescaler) * Avg_ISR_Cycles); // I may revisit this. Quite challenging to get right, and even harder to get consistently right
-
-		Calculated_Ticks[Timer] = (Scaled_Ticks >> 10);
-		Remaining_Ticks[Timer] = Calculated_Ticks[Timer];
 		
-		switch(Timer){
+		//Adjusted_Cycles = (((TC_CLK + (F_CLK*Prescaler/2))/F_CLK*Prescaler) * Avg_ISR_Cycles); // I may revisit this. Quite challenging to get right, and even harder to get consistently right
+		
+		Calculated_Ticks[Selected_Timer] = (Scaled_Ticks >> 10);
+		
+		Remaining_Ticks[Selected_Timer] = Calculated_Ticks[Selected_Timer];
+		
+		switch(Selected_Timer){
 			
 			case _16_bit:
 				
@@ -187,7 +304,7 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 				OCR1AH = 0xFF;
 				OCR1AL = 0xFF; // Timer begins
 				
-				TIMSK1 |= (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
+				TIMSK1 = (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
 				break;
 			
 			case _8_bit1:
@@ -195,7 +312,8 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 				TCCR0A = (1 << WGM01);
 				TCCR0B = (1 << CS02) | (1 << CS00);
 				
-				TIMSK0 |= (1 << OCIE0A);
+				TIMSK0 = (1 << OCIE0A);
+				
 				OCR0A = 0xFF;
 				break;
 			
@@ -204,19 +322,18 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 				TCCR2A = (1 << WGM21);
 				TCCR2B = (1 << CS22) | (1 << CS21) | (1 << CS20);
 
-				TIMSK2 |= (1 << OCIE2A);
-				
+				TIMSK2 = (1 << OCIE2A);
+	
 				OCR2A = 0xFF;
 				break;
 			
 		}
 		
-
-		return true;
+		return TIMER_OK;
 		
 	}else{
 		
-		Calculated_Ticks[Timer] = 0;
+		Calculated_Ticks[Selected_Timer] = 0;
 		
 		uint16_t Clock_Dividers[5] = {1, 8, 64, 256, 1024}; 
 		
@@ -232,144 +349,304 @@ bool Configure_Timer_Tick(uint16_t Time, uint32_t Unit, Timers Timer){ // All re
 	
 	uint32_t Denominator =  Prescaler * Unit;
 
-	if(Denominator == 0) return false; // Unexpected error
+	if(Denominator == 0) return TIMER_FAULT;
 	
 	//Adjusted_Cycles = (((TC_CLK + (F_CLK*Prescaler/2))/F_CLK*Prescaler) * Avg_ISR_Cycles); 
 	
 	// Rounding integer division (A new trick I learned) reduces error of Timer_Top ideally to +- 0.5:
+	
 	uint32_t Timer_Top = ((Numerator + (Denominator/2)) / Denominator); 
 	
-	if (Timer_Top == 0) return false; //Unexpected error
+	if (Timer_Top == 0) return TIMER_FAULT;
 
-	if( (Timer == _8_bit1 || Timer == _8_bit2) && Timer_Top > 255 ){
-		return false; // Unexpected error
-	}else if(Timer == _16_bit && Timer_Top > 65535){
-		return false;
+	if( (Selected_Timer == _8_bit1 || Selected_Timer == _8_bit2) && Timer_Top > 255 ){
+		
+		return TIMER_FAULT; 
+		
+	}else if(Selected_Timer == _16_bit && Timer_Top > 65535){
+		
+		return TIMER_FAULT;
+		
 	}
 	
-	switch(Timer){
+	Timer_Status Status = Set_Prescaler(Selected_Timer, Prescaler);
+	
+	if(Status == TIMER_FAULT){
+		return TIMER_FAULT;
+	}
+	
+	switch(Selected_Timer){
 		
 		case _16_bit:
-			
-			switch(Prescaler){ // Don't need to clear TCCRxB, as it will be assigned:
-					
-				case 1:
 				
-					TCCR1B = (1 << CS10);
-					break;
-					
-				case 8:
-				
-					TCCR1B = (1 << CS11);
-					break;
-					
-				case 64:
-				
-					TCCR1B = (1 << CS11) | (1 << CS10);
-					break;
-					
-				case 256:
-				
-					TCCR1B = (1 << CS12);
-					break;
-					
-				case 1024:
-				
-					TCCR1B = (1 << CS12) | (1 << CS10);
-					break;
-					
-				}
+			Modes[_16_bit] = TIMER_CTC;
 				
 			TCCR1B |= (1 << WGM12); 
 			
 			OCR1AH = (Timer_Top >> 8) & 0xFF;
-			TIMSK1 |= (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
+			TIMSK1 = (1 << OCIE1A); // Timer/Counter1 Interrupt Mask Register -> Enabled interrupt for progrm at TIMER1_COMPA_vect to be executed on compare match
 			OCR1AL = (Timer_Top & 0xFF); // Timer begins
+			
 				
 			break;
 			
 		case _8_bit1:
-		
-			switch(Prescaler){ 
-				
-				case 1:
-				
-					TCCR0B = (1 << CS00);
-					break;
-				
-				case 8:
-				
-					TCCR0B = (1 << CS01);
-					break;
-				
-				case 64:
-				
-					TCCR0B = (1 << CS01) | (1 << CS00);
-					break;
-				
-				case 256:
-					
-					TCCR0B = (1 << CS02);
-					break;
-				
-				case 1024:
-				
-					TCCR0B = (1 << CS02) | (1 << CS00);
-					break;
-				
-			}
 			
+			Modes[_8_bit1] = TIMER_CTC;
 
 			TCCR0A |= (1 << WGM01); 	
-						
-			TIMSK0 |= (1 << OCIE0A);
+			
+			TIMSK0 = (1 << OCIE0A);
 			OCR0A = Timer_Top;		
 		
 			break;
 			
 		case _8_bit2:
+			
+			Modes[_8_bit2] = TIMER_CTC;
 
-			switch(Prescaler){
+			TCCR2A |= (1 << WGM21);		
 			
-				case 1:
-			
-				TCCR2B = (1 << CS20);
-				break;
-			
-				case 8:
-			
-				TCCR2B = (1 << CS21);
-				break;
-			
-				case 64:
-			
-				TCCR2B = (1 << CS22);
-				break;
-			
-				case 256:
-			
-				TCCR2B = (1 << CS22) |  (1<<CS21);
-				break;
-			
-				case 1024:
-			
-				TCCR2B = (1 << CS22) | (1 << CS21) | (1 << CS20);
-				break;
-			
-			}
-			
-			TCCR2A = (1 << WGM21);		
-				
-			TIMSK2 |= (1 << OCIE2A);
+			TIMSK2 = (1 << OCIE2A);
 			OCR2A = Timer_Top; 
 		
 			break;
 				
 	}
 	
-	return true;
+	return TIMER_OK;
 
 }
+
+// f_PWM = f_clk/N*256
+
+Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable freq. variable duty %, except for 16 bit timer.
+
+	switch(PWM->Timer) {
+		
+		case _16_bit:
+		
+			if(Modes[_16_bit] == TIMER_CTC){ // Everything gets assigned in CTC mode, but in PWM mode, we want to preserve all other active pins
+				
+				TIMSK1 = 0; // Disable all timer interrupts
+				
+				TCCR1A = 0;
+				TCCR1B = 0;
+				// ...
+			}			
+			
+			// PWM Mode 10: Phase correct, variable freq & duty cycle
+			TCCR1A |= (1 << WGM11);
+			TCCR1B |= (1 << WGM13);
+			
+			ICR1H = (uint8_t)(PWM->ICR >> 8); // A new style of doing this. Is this more clear? I think so.
+			ICR1L = (uint8_t)(PWM->ICR);
+			
+			switch(PWM->Pin){
+			
+				case PB1_OC1A:
+				
+					TCCR1A |= (1 << COM1A1); // Non inverting phase correct PWM
+					
+					break;
+				
+				case PB2_OC1B:
+				
+					TCCR1A |= (1 << COM1B1);
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
+			
+			Modes[_16_bit] = TIMER_PWM;
+			
+			break;
+		
+		case  _8_bit1:
+		
+			if(Modes[_8_bit1] == TIMER_CTC){
+				
+				TIMSK0 = 0; // Disable all timer interrupts
+					
+				TCCR0A = 0;
+				TCCR0B = 0;
+				// ...
+			}
+				
+			TCCR0A |= (1 << WGM00); // Phase correct PWM
+			TCCR0B |= (1 << WGM02); 
+			
+			switch(PWM->Pin){
+				
+				case PD5_OC0B:
+				
+					TCCR0A |= (1 << COM0B1);
+				
+					break;
+				
+				case PD6_OC0A:
+				
+					TCCR0A |= (1 << COM0A1);
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+				
+			}
+			
+			Modes[_8_bit1] = TIMER_PWM;
+		
+			break;
+		
+		case _8_bit2:
+		
+			if(Modes[_8_bit2] == TIMER_CTC){
+					
+				TIMSK2 = 0; // Disable all timer interrupts
+					
+				TCCR2A = 0;
+				TCCR2B = 0;
+					// ...
+			}
+			
+			TCCR2A |= (1 << WGM20); // Phase correct PWM
+			TCCR2B |= (1 << WGM22);
+	
+			switch(PWM->Pin){
+				
+				case PB3_OC2A:
+					
+					TCCR2A |= (1 << COM2A1);
+					
+					break;
+				
+				case PD3_OC2B:
+					
+					TCCR2A |= (1 << COM2B1);
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+			}			
+			
+			Modes[_8_bit2] = TIMER_PWM;
+			
+			break;
+		
+		default:
+		
+			return TIMER_FAULT;
+	
+	}
+	
+	return TIMER_OK;
+	
+}
+
+Timer_Status Config_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycle){
+	
+	if(Duty_Cycle > 100) {
+		return TIMER_FAULT;
+	}
+	
+	Timer_Status Status = Set_Prescaler(PWM->Timer, Prescaler);
+	
+	if(Status == TIMER_FAULT){
+		return TIMER_FAULT;
+	}
+	
+	switch(PWM->Timer){
+		
+		case _16_bit:
+		
+			switch(PWM->Pin){
+			
+				case PB1_OC1A:
+				
+					OCR1B = (Duty_Cycle * 65535 + 50) / 100;
+					
+					break;
+				
+				case PB2_OC1B:
+				
+					OCR1A = (Duty_Cycle * 65535 + 50) / 100;
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+			}
+						
+			break;
+		
+		case _8_bit1:
+			
+			
+			switch(PWM->Pin){
+				
+				case PD5_OC0B:
+				
+					OCR0B = (Duty_Cycle * 255 + 50) / 100;
+				
+					break;
+				
+				case PD6_OC0A:
+				
+					OCR0A = (Duty_Cycle * 255 + 50) / 100;
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+			}
+			
+		
+			break;
+		
+		case _8_bit2:
+		
+			switch(PWM->Pin){
+				
+				case PB3_OC2A:
+					
+					OCR2A = (Duty_Cycle * 255 + 50) / 100;
+					
+					break;
+				
+				case PD3_OC2B:
+					
+					
+					OCR2B = (Duty_Cycle * 255 + 50) / 100;
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+			}	
+		
+			break;
+		
+		default:
+		
+			return TIMER_FAULT;
+		
+	}
+	
+	return TIMER_OK;
+	
+}
+
 
 /* CONFIGURE TIMER FUNCTION
 

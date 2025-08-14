@@ -7,7 +7,7 @@
 #include "../Headers/Includes.h"
 #include "../Headers/I2C.h"
 
-bool TWI_Ready = true;
+volatile bool TWI_Ready = true;
 
 #define I2C_Status (TWSR & 0xF8)
 

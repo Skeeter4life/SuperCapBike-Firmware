@@ -10,9 +10,9 @@
 
 typedef enum Ring_Buffer_Status{
 	
+	BUFFER_FAULT = 0,
 	BUFFER_OK,
-	BUFFER_EMPTY,
-	BUFFER_FAULT 
+	BUFFER_EMPTY
 	
 }Ring_Buffer_Status;
 
@@ -21,6 +21,7 @@ typedef enum Indexing_States{
 	WRITE_LEADS_READ,
 	OVERFLOW
 }Indexing_States;
+
 
 typedef struct Ring_Buffer{
 

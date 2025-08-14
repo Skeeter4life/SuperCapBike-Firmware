@@ -18,29 +18,26 @@ int main(void)
 {
 	sei();
 	
-	DDRB |= (1 << DDB0);
-	DDRB |= (1 << DDB1);
-	DDRD |= (1 << DDD7);
-	DDRD |= (1 << DDD6);
-	
-	//bool Precisie_Mode = true;
+	DDRB |= (1 << DDB0) | (1 << DDB1);
+	DDRD |= (1 << DDD6)| (1 << DDD7);
 	
 	Timers Timer1 = _8_bit2;
 	
-	bool Timer1_Set = Configure_Timer_Tick(100, u_MiliSeconds, Timer1);
+	bool Timer1_Set = Configure_Timer(100, u_MiliSeconds, Timer1);
 	
 	Timers Timer2 = _8_bit1;
 	
-	bool Timer2_Set = Configure_Timer_Tick(1000, u_MicroSeconds, Timer2);
+	bool Timer2_Set = Configure_Timer(1000, u_MicroSeconds, Timer2);
 	
 	Timers Timer3 = _16_bit;
 	
-	bool Timer3_Set = Configure_Timer_Tick(3, u_Seconds, Timer3);
+	bool Timer3_Set = Configure_Timer(3, u_Seconds, Timer3);
 	
 	if(!Timer1_Set || !Timer2_Set || !Timer3_Set){
 		PORTB = (1 << PORTB1);
 	}
 	
+	/*
 	int16_t W1 = EEPROM_Write(0x0000, 0x1C);
 	
 	int16_t R1 = EEPROM_Read(0x0000);
@@ -49,7 +46,7 @@ int main(void)
 		
 	if(!W1 || !W2 || !R1){
 		PORTB = (1 << PORTB1);
-	}
+	}*/
 	
 	Ring_Buffer Buffer1;
 	uint8_t Received_Data = 0;
@@ -71,7 +68,7 @@ int main(void)
 		
 		if(TWI_Ready){
 			
-			TWI_Handler(&MCP23017);
+			//TWI_Handler(&MCP23017);
 			
 		}
 

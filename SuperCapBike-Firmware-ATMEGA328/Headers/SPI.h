@@ -24,8 +24,8 @@ typedef enum{
 }Devices;
 
 typedef enum SPI_Status{
-	SPI_OK,
-	SPI_FAULT	
+	SPI_FAULT = 0,
+	SPI_OK
 }SPI_Status;
 
 extern SPI_Status SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order);

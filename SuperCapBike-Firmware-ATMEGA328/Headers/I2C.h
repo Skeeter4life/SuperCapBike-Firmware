@@ -27,9 +27,9 @@ enum TWI_State{
 
 typedef enum TWI_Status{
 	
+	TWI_FAULT = 0,
 	TWI_OK,
-	DATA_RECEIVED,
-	TWI_FAULT
+	DATA_RECEIVED
 		
 }TWI_Status;
 
@@ -67,7 +67,7 @@ typedef struct TWI_Data{
 	
 }TWI_Data;
 
-extern bool TWI_Ready;
+extern volatile bool TWI_Ready;
 extern TWI_Status Init_TWI(TWI_Data* I2C_Data, uint8_t Device_Address, uint8_t Register_Address, TWI_Modes Mode, uint8_t Data);
 extern TWI_Status TWI_Handler(TWI_Data* I2C_Data);
 
