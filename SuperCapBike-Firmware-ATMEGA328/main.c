@@ -18,25 +18,33 @@ int main(void)
 {
 	sei();
 	
-	DDRB |= (1 << DDB0) | (1 << DDB1);
-	DDRD |= (1 << DDD6)| (1 << DDD7);
+	DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3);
+	DDRD |= (1 << DDD6)| (1 << DDD7) | (1 << DDD5) | (1 << DDD3);
 	
 	Timers Timer1 = _8_bit2;
 	
-	bool Timer1_Set = Configure_Timer(100, u_MiliSeconds, Timer1);
+	Timer_Status Timer1_Set = Configure_Timer(100, u_MiliSeconds, Timer1);
 	
 	Timers Timer2 = _8_bit1;
 	
-	bool Timer2_Set = Configure_Timer(1000, u_MicroSeconds, Timer2);
+	Timer_Status Timer2_Set = Configure_Timer(1000, u_MicroSeconds, Timer2);
 	
 	Timers Timer3 = _16_bit;
 	
-	bool Timer3_Set = Configure_Timer(3, u_Seconds, Timer3);
+	Timer_Status Timer3_Set = Configure_Timer(3, u_Seconds, Timer3);
+	
+	PWM_Setup Phase1;
+	
+	Phase1.Pin = PD5_OC0B;
+	
+	Timer1_Set = Init_PWM(&Phase1);
+	
+	Configure_PWM(&Phase1, 1, 50);
 	
 	if(!Timer1_Set || !Timer2_Set || !Timer3_Set){
 		PORTB = (1 << PORTB1);
 	}
-	
+		
 	/*
 	int16_t W1 = EEPROM_Write(0x0000, 0x1C);
 	
@@ -68,7 +76,7 @@ int main(void)
 		
 		if(TWI_Ready){
 			
-			//TWI_Handler(&MCP23017);
+			TWI_Handler(&MCP23017);
 			
 		}
 

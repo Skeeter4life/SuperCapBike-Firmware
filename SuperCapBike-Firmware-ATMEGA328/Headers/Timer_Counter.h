@@ -49,15 +49,16 @@ typedef enum Pins{
 
 typedef struct PWM_Setup{
 	
-	Timers Timer;
 	Pins Pin;
 	
-	uint16_t ICR; // Only for 16_bit timer
+	uint16_t ICR; // Only for 16_bit timer.
 	
 }PWM_Setup;
 
 extern Timer_Status Configure_Timer(uint16_t Time, uint32_t Unit, Timers Selected_Timer);
+
 extern Timer_Status Init_PWM(PWM_Setup* PWM);
+extern Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycle);
 
 
 #endif /* TIMER_COUNTER_H_ */
