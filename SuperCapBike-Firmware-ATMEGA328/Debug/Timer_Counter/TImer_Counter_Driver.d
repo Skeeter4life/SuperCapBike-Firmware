@@ -17,7 +17,8 @@ Timer_Counter/Timer_Counter_Driver.d Timer_Counter/Timer_Counter_Driver.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../Timer_Counter/../Headers/Timer_Counter.h \
- ../Timer_Counter/../Headers/Includes.h
+ ../Timer_Counter/../Headers/Includes.h \
+ ../Timer_Counter/../Headers/Timer_Counter.h
 
 ../Timer_Counter/../Headers/Includes.h:
 
@@ -54,3 +55,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../Timer_Counter/../Headers/Timer_Counter.h:
 
 ../Timer_Counter/../Headers/Includes.h:
+
+../Timer_Counter/../Headers/Timer_Counter.h:

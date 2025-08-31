@@ -11,25 +11,28 @@
 #include "../Headers/Includes.h"
 
 #define MCP23017_Address 0x20
+#define TWSR_Status (TWSR & 0xF8)
 
-enum TWI_State{
+typedef enum TWI_States{
 	
-	TWI_STATE_START,
-	TWI_STATE_REPEATED_START,
-	SEND_ADDRESS_READ,
-	SEND_ADDRESS_WRITE,
-	ADDRESSING_REGISTER,
-	WRITING,
-	READING,
-	STOP,
+	TWI_REPEATED_START,
+	TWI_ADDRESS_READ,
+	TWI_ADDRESS_WRITE,
+	TWI_ADDRESS_REGISTER,
+	TWI_WRITING,
+	TWI_READING,
+	TWI_STOP,
+	TWI_TIMEOUT,
+	TWI_IDLE
 	
-}I2C_State;
+}TWI_States;
 
 typedef enum TWI_Status{
 	
 	TWI_FAULT = 0,
 	TWI_OK,
-	DATA_RECEIVED
+	DATA_RECEIVED,
+	TWI_BUSY
 		
 }TWI_Status;
 
@@ -57,18 +60,21 @@ enum TWI_Codes{
 typedef struct TWI_Data{
 	
 	
-	uint8_t Device_Address;
-	uint8_t Register_Address;
+	volatile uint8_t Device_Address;
+	volatile uint8_t Register_Address;
 	
-	TWI_Modes Mode;
-	uint8_t Data;
+	volatile TWI_Modes Mode;
+	volatile uint8_t Data;
 
-	uint8_t Received_Data;
+	volatile uint8_t* Data_Out;
+	void (*Callback)(void);
 	
 }TWI_Data;
 
-extern volatile bool TWI_Ready;
-extern TWI_Status Init_TWI(TWI_Data* I2C_Data, uint8_t Device_Address, uint8_t Register_Address, TWI_Modes Mode, uint8_t Data);
-extern TWI_Status TWI_Handler(TWI_Data* I2C_Data);
+extern TWI_Status TWI_Write(uint8_t Device_Address, uint8_t Register_Address, uint8_t Data); // I don't want to initialize a struct going into it
+extern TWI_Status TWI_Read(uint8_t Device_Address, uint8_t Register_Address, uint8_t* Data_Out, void (*Callback)(void));
+
+extern volatile TWI_States Next_I2C_State;
+extern volatile TWI_Status I2C_Status;
 
 #endif /* I2C_H_ */

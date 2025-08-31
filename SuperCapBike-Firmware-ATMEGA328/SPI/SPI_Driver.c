@@ -83,7 +83,7 @@ SPI_Status SPI_Main_Init(uint8_t SPI_Prescaler, Data_Order Order){
 			
 }
 
-SPI_Status SPI_Passive_Init(){ // Not receiving. Useful for re-programming over SPI
+SPI_Status SPI_Passive_Init(void){ // Not receiving. Useful for re-programming over SPI
 	
 	DDRB &= ~((1 << PORTB5) | (1 << PORTB4) | (1 << PORTB3));
 	SPI_Config = Passive;

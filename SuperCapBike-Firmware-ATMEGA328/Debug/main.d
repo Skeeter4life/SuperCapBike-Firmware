@@ -14,9 +14,12 @@ main.d main.o: .././main.c .././Headers/Includes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- .././Headers/EEPROM.h .././Headers/Includes.h \
- .././Headers/Timer_Counter.h .././Headers/Dynamic_Ring_Buffer.h \
- .././Headers/I2C.h .././Headers/../Headers/Includes.h
+ .././Headers/Timer_Counter.h .././Headers/Includes.h \
+ .././Headers/EEPROM.h .././Headers/Timer_Counter.h \
+ .././Headers/Dynamic_Ring_Buffer.h .././Headers/../Headers/Includes.h \
+ .././Headers/../Headers/I2C.h \
+ .././Headers/../Headers/../Headers/Includes.h .././Headers/I2C.h \
+ .././Headers/Motor_Driver.h
 
 .././Headers/Includes.h:
 
@@ -50,14 +53,22 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-.././Headers/EEPROM.h:
+.././Headers/Timer_Counter.h:
 
 .././Headers/Includes.h:
+
+.././Headers/EEPROM.h:
 
 .././Headers/Timer_Counter.h:
 
 .././Headers/Dynamic_Ring_Buffer.h:
 
+.././Headers/../Headers/Includes.h:
+
+.././Headers/../Headers/I2C.h:
+
+.././Headers/../Headers/../Headers/Includes.h:
+
 .././Headers/I2C.h:
 
-.././Headers/../Headers/Includes.h:
+.././Headers/Motor_Driver.h:

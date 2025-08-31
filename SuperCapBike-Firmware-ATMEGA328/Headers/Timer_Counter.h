@@ -10,9 +10,7 @@
 
 #include "Includes.h"
 
-extern const uint8_t u_Seconds; // Not in an enum to save memory
-extern const uint16_t u_MiliSeconds;
-extern const uint32_t u_MicroSeconds;
+extern volatile uint64_t System_Ticks[3];
 
 extern const uint32_t F_CLK;
 extern const uint32_t TC_CLK;
@@ -46,6 +44,16 @@ typedef enum Pins{
 	PD3_OC2B
 }Pins;
 
+typedef enum Timer_Units{
+	
+	u_MicroSeconds = 1000000,
+	u_MiliSeconds = 1000,
+	u_Seconds = 1,
+	
+	Invalid = 0
+		
+}Timer_Units;
+
 
 typedef struct PWM_Setup{
 	
@@ -55,10 +63,13 @@ typedef struct PWM_Setup{
 	
 }PWM_Setup;
 
-extern Timer_Status Configure_Timer(uint16_t Time, uint32_t Unit, Timers Selected_Timer);
-
+extern Timer_Status Configure_Timer(uint16_t Step, Timer_Units Unit, Timers Selected_Timer);
 extern Timer_Status Init_PWM(PWM_Setup* PWM);
 extern Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycle);
+
+extern Timer_Modes Timer_Mode[3];
+extern Timer_Units Timer_Unit[3];
+extern uint16_t Timer_Step[3];
 
 
 #endif /* TIMER_COUNTER_H_ */

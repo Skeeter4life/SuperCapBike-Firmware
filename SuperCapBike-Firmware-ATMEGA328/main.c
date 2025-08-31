@@ -10,81 +10,96 @@
 #include "Headers/Timer_Counter.h"
 #include "Headers/Dynamic_Ring_Buffer.h"
 #include "Headers/I2C.h"
+#include "Headers/Motor_Driver.h"
 
-const uint32_t F_CLK = 16000000;
-const uint32_t TC_CLK = 16000000; // TC_CLK can be asynchronous to F_CLK.
+const uint32_t F_CLK = 8000000;
+const uint32_t TC_CLK = 8000000; // TC_CLK can be asynchronous to F_CLK.
+
+const Timers Global_Timer = _8_bit2;
 
 int main(void)
 {
 	sei();
 	
-	DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3);
-	DDRD |= (1 << DDD6)| (1 << DDD7) | (1 << DDD5) | (1 << DDD3);
+	Motor_Status Motor_Setup = Init_Motor();
 	
-	Timers Timer1 = _8_bit2;
+	if(Motor_Setup == Motor_FAULT) return 1;
 	
-	Timer_Status Timer1_Set = Configure_Timer(100, u_MiliSeconds, Timer1);
+	MCUCR |= (1 << PUD); // Disable pull up resistors
 	
-	Timers Timer2 = _8_bit1;
+	//DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3);
+	//DDRD |= (1 << DDD6)| (1 << DDD7) | (1 << DDD5) | (1 << DDD3);
 	
-	Timer_Status Timer2_Set = Configure_Timer(1000, u_MicroSeconds, Timer2);
+	//Timer_Status Timer1_Set = Configure_Timer(1, u_MiliSeconds, Global_Timer); // 8 bit2 is free in my case, not needed for PWM
+	//
+	//Timers Timer2 = _8_bit1;
+	//
+	//Timer_Status Timer2_Set = Configure_Timer(5000, u_MicroSeconds, Timer2);
+	//
+	//Timers Timer3 = _16_bit;
+	//
+	//Timer_Status Timer3_Set = Configure_Timer(3, u_Seconds, Timer3);
+	//
+	//PWM_Setup Phase1;
+	//
+	//Phase1.Pin = PD5_OC0B;
+	//
+	//Timer1_Set = Init_PWM(&Phase1);
+	//
+	//Configure_PWM(&Phase1, 1, 50);
+	//
+	//if(!Timer1_Set || !Timer2_Set || !Timer3_Set){
+		//PORTB = (1 << PORTB1);
+	//}
+		//
+	///*
+	//int16_t W1 = EEPROM_Write(0x0000, 0x1C);
+	//
+	//int16_t R1 = EEPROM_Read(0x0000);
+	//
+	//int16_t W2 = EEPROM_Write(0x0001, 0x1D);
+		//
+	//if(!W1 || !W2 || !R1){
+		//PORTB = (1 << PORTB1);
+	//}*/
+		//
+	//uint8_t Received_Data = 0;
+	//
+	//Ring_Buffer TWI_Buffer;
+	//Ring_Buffer* p_TWI_Buffer = &TWI_Buffer; 
+	//
+	//TWI_Buffer_Enabled = false;
+	//
+	//Init_Buffer(p_TWI_Buffer, 25, 25);
 	
-	Timers Timer3 = _16_bit;
+	//TWI_Add_W_To_Queue(p_TWI_Buffer, MCP23017_Address, 0x01, 0b11111111);// Non imperative TWI operations. Only allowable under a certain speed.
+	//TWI_Add_R_To_Queue(p_TWI_Buffer, MCP23017_Address, 0x13, &Received_Data);
 	
-	Timer_Status Timer3_Set = Configure_Timer(3, u_Seconds, Timer3);
+	//TWI_Read(MCP23017_Address, 0x00, &Received_Data, NULL);
 	
-	PWM_Setup Phase1;
-	
-	Phase1.Pin = PD5_OC0B;
-	
-	Timer1_Set = Init_PWM(&Phase1);
-	
-	Configure_PWM(&Phase1, 1, 50);
-	
-	if(!Timer1_Set || !Timer2_Set || !Timer3_Set){
-		PORTB = (1 << PORTB1);
-	}
+	while(1){
 		
-	/*
-	int16_t W1 = EEPROM_Write(0x0000, 0x1C);
-	
-	int16_t R1 = EEPROM_Read(0x0000);
-	
-	int16_t W2 = EEPROM_Write(0x0001, 0x1D);
-		
-	if(!W1 || !W2 || !R1){
-		PORTB = (1 << PORTB1);
-	}*/
-	
-	Ring_Buffer Buffer1;
-	uint8_t Received_Data = 0;
-	
-	Init_Buffer(&Buffer1, 10, 2);
-	
-	for(uint8_t i = 0; i <= 30; i++){
-		Write_to_Buffer(&Buffer1, i);
-		Read_from_Buffer(&Buffer1, &Received_Data);
-	}
-	
-	Free_Buffer(&Buffer1); // Buffer functionality Verified with debugger. More rigorous testing soon.
-	
-	TWI_Data MCP23017;
-	
-	Init_TWI(&MCP23017, MCP23017_Address, 0x00, WRITING_MODE, 0b10101010);
-	
-	while (1 == true){
-		
-		if(TWI_Ready){
-			
-			TWI_Handler(&MCP23017);
-			
-		}
+		//if(TWI_Buffer_Enabled && Current_Speed <= 20 && !IsEmpty(p_TWI_Buffer)){
+			//Fetch_TWI(p_TWI_Buffer);
+		//}
 
+		
 	}
+	
+	//Free_Buffer(p_TWI_Buffer);
+	
+	//while (1 == true){
+		//
+		//if(TWI_Ready == true){
+			//
+			//TWI_Handler(&MCP23017);
+			//
+		//}
+	//
+	//} // Part of TWI_Old
 	
 	return 0;
 }
-
 
 /*
 avrdude -c usbtiny -p m328 -U ?:?:"C:\Users\Andrew\Documents\SuperCap_Bike\SuperCapBike-Software\SuperCapBike-Firmware-ATMEGA328\Debug\SuperCapBike-Firmware-ATMEGA328.hex":?
