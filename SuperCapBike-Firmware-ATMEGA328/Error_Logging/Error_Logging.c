@@ -4,10 +4,10 @@
  *  Author: Andrew
  */ 
 
-#include "Headers/Includes.h"
-#include "Headers/I2C.h"
-#include "Headers/Dynamic_Ring_Buffer.h"
-#include "Headers/EEPROM.h"
+#include "../Headers/Includes.h"
+#include "../Headers/I2C.h"
+#include "../Headers/Dynamic_Ring_Buffer.h"
+#include "../Headers/EEPROM.h"
 
 void Log_Error(Error_Log* Error){
 	

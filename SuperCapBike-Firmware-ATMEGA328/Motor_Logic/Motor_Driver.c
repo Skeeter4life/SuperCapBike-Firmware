@@ -82,29 +82,26 @@ void Update_Commutation(void){
 	
 	PORTD &= ~((1 << PORTD0) | (1 << PORTD1) | (1 << PORTD4)); // Ensure all IR2014's are in shutdown state
 	
-	DDRD &= ~((1 << DDD5) | (1 << DDD6));
-	DDRB &= ~(1<<DDB1); // Set IN_1, IN_2 and IN_3 as High-Z
-	
 	switch(Current_Phase->High){
 		
 		case Phase_A:
-			
+		
+			DDRD |= (1 << DDD6); // IN_1 as output
 			Toggle_PWM(&IN_1, ON);
-			PORTD |= (1 << PORTD6); // IN_1
 			
 			break;
 		
 		case Phase_B:
 			
-			Toggle_PWM(&IN_1, ON);
-			PORTD |= (1 << PORTD5); // IN_2
+			DDRD |= (1 << DDD5); // IN2
+			Toggle_PWM(&IN_2, ON);
 			
 			break;
 			
 		case Phase_C:
 			
-			Toggle_PWM(&IN_1, ON);
-			PORTB |= (1 << PORTB1); // IN_3
+			DDRB |= (1 << DDB1); // IN3
+			Toggle_PWM(&IN_3, ON);
 			
 			break;
 			
@@ -120,9 +117,9 @@ void Update_Commutation(void){
 		
 			Toggle_PWM(&IN_1, OFF); // Note: if the COMnX bit(s) are set, the functionality of the PORTx register is overridden
 			
-			DDRD &= ~(1 << DDD6); // Set the pin low
+			DDRD |= (1 << DDD6); // Set output, digital LOW:
 			
-			PORTD |= (1 << PORTD6); // IN_1
+			PORTD &= ~(1 << PORTD6); // IN_1
 		
 			break;
 		
@@ -130,9 +127,9 @@ void Update_Commutation(void){
 		
 			Toggle_PWM(&IN_2, OFF);
 			
-			DDRD &= ~(1 << DDD5);
+			DDRD |= (1 << DDD5);
 			
-			PORTD |= (1 << PORTD5); // IN_2
+			PORTD &= ~(1 << PORTD5); // IN_2
 		
 			break;
 		
@@ -140,9 +137,9 @@ void Update_Commutation(void){
 		
 			Toggle_PWM(&IN_3, OFF);
 			
-			DDRB &= ~(1 << DDB1);
+			DDRB |= (1 << DDB1);
 			
-			PORTB |= (1 << PORTB1); // IN_3
+			PORTB &= ~(1 << PORTB1); // IN_3
 		
 			break;
 		
@@ -248,6 +245,7 @@ Motor_Status Init_Motor(void){
 	sei(); // Ensure interrupts are enabled
 		
 	EICRA |= (1 << ISC01); // The falling edge of INT0 generates an interrupt
+	EIMSK |= (1 << INT0);
 	
 	return Motor_OK;
 	

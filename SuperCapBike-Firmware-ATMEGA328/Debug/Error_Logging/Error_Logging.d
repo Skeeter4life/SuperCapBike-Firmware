@@ -1,5 +1,5 @@
-Error_Logging.d Error_Logging.o: .././Error_Logging.c \
- .././Headers/Includes.h \
+Error_Logging/Error_Logging.d Error_Logging/Error_Logging.o: \
+ ../Error_Logging/Error_Logging.c ../Error_Logging/../Headers/Includes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
@@ -15,11 +15,14 @@ Error_Logging.d Error_Logging.o: .././Error_Logging.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- .././Headers/I2C.h .././Headers/../Headers/Includes.h \
- .././Headers/Dynamic_Ring_Buffer.h .././Headers/../Headers/I2C.h \
- .././Headers/EEPROM.h .././Headers/Includes.h
+ ../Error_Logging/../Headers/I2C.h \
+ ../Error_Logging/../Headers/../Headers/Includes.h \
+ ../Error_Logging/../Headers/Dynamic_Ring_Buffer.h \
+ ../Error_Logging/../Headers/../Headers/I2C.h \
+ ../Error_Logging/../Headers/EEPROM.h \
+ ../Error_Logging/../Headers/Includes.h
 
-.././Headers/Includes.h:
+../Error_Logging/../Headers/Includes.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
 
@@ -51,14 +54,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-.././Headers/I2C.h:
+../Error_Logging/../Headers/I2C.h:
 
-.././Headers/../Headers/Includes.h:
+../Error_Logging/../Headers/../Headers/Includes.h:
 
-.././Headers/Dynamic_Ring_Buffer.h:
+../Error_Logging/../Headers/Dynamic_Ring_Buffer.h:
 
-.././Headers/../Headers/I2C.h:
+../Error_Logging/../Headers/../Headers/I2C.h:
 
-.././Headers/EEPROM.h:
+../Error_Logging/../Headers/EEPROM.h:
 
-.././Headers/Includes.h:
+../Error_Logging/../Headers/Includes.h:
