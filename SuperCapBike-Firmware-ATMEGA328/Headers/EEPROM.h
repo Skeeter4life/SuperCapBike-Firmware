@@ -17,6 +17,8 @@ enum {
 }EEPROM_Mode;
 */
 extern volatile bool EEPROM_Ready;
+extern volatile bool EEPROM_Enabled;
+extern volatile uint16_t EEPROM_Address;
 
 extern int16_t EEPROM_Read(uint16_t Address); // int16_t as -1 indicates that the operation failed. Of course need 8 unsigned bits to return the read address.
 extern int16_t EEPROM_Write(uint16_t Address, uint8_t Data);

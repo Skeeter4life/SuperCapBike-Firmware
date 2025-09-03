@@ -24,12 +24,11 @@
 
 typedef struct Error_Log{
 	
-	char* Message[8];
+	char Message[8]; // 7 char max
 	uint64_t Time; // Realistically, will never overflow.
 	
 }Error_Log;
 
-#include "Timer_Counter.h"
-extern const Timers Global_Timer;
+extern void Log_Error(Error_Log* Error);
 
 #endif /* INCLUDES_H_ */

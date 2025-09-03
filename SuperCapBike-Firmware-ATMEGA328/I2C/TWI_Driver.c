@@ -1,7 +1,6 @@
 /*
  * TWI_Driver.c
  *
- * Created: 2025-08-20 2:53:00 PM
  *  Author: Andrew
  */ 
 
@@ -216,7 +215,7 @@ ISR(TWI_vect){
 void Start_TWI(void){
 	
 	TWSR = 0x00;
-	TWBR = 0; // 12 = 400 kHz SCL frequency at F_CLK = 16MHZ, 17 at F_CLK = 20MHz 0 = 1.25Mhz @ F_CLK = 20MHz
+	TWBR = 39; // 12 = 400 kHz SCL frequency at F_CLK = 16MHZ, 17 at F_CLK = 20MHz 0 = 1.25Mhz @ F_CLK = 20MHz
 		
 	Next_I2C_State = TWI_ADDRESS_WRITE;
 	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWIE) | (1 << TWSTA); // Send start
@@ -240,7 +239,7 @@ TWI_Status TWI_Write(uint8_t Device_Address, uint8_t Register_Address, uint8_t D
 
 }
 
-TWI_Status TWI_Read(uint8_t Device_Address, uint8_t Register_Address, uint8_t* Data_Out, void (*Callback)(void)){
+TWI_Status TWI_Read(uint8_t Device_Address, uint8_t Register_Address, volatile uint8_t* Data_Out, void (*Callback)(void)){
 	
 	//while(Next_I2C_State != TWI_IDLE);
 	

@@ -12,10 +12,12 @@
 #include "Headers/I2C.h"
 #include "Headers/Motor_Driver.h"
 
-const uint32_t F_CLK = 8000000;
+const uint32_t F_CLK = 8000000; // Currently using internal RC oscillator
 const uint32_t TC_CLK = 8000000; // TC_CLK can be asynchronous to F_CLK.
 
 const Timers Global_Timer = _8_bit2;
+
+Ring_Buffer* p_TWI_Buffer;
 
 int main(void)
 {
@@ -30,7 +32,18 @@ int main(void)
 	//DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB2) | (1 << DDB3);
 	//DDRD |= (1 << DDD6)| (1 << DDD7) | (1 << DDD5) | (1 << DDD3);
 	
-	//Timer_Status Timer1_Set = Configure_Timer(1, u_MiliSeconds, Global_Timer); // 8 bit2 is free in my case, not needed for PWM
+	Timer_Status Timer1_Set = Configure_Timer(1, u_MiliSeconds, Global_Timer); // 8 bit2 is free in my case, not needed for PWM
+	
+	if(!Timer1_Set){
+		
+		Error_Log Timer_Error = {
+			.Message = "TIMER1",
+			.Time = 0	
+		};
+		
+		Log_Error(&Timer_Error);
+		
+	}
 	//
 	//Timers Timer2 = _8_bit1;
 	//
@@ -65,12 +78,12 @@ int main(void)
 		//
 	//uint8_t Received_Data = 0;
 	//
-	//Ring_Buffer TWI_Buffer;
-	//Ring_Buffer* p_TWI_Buffer = &TWI_Buffer; 
-	//
-	//TWI_Buffer_Enabled = false;
-	//
-	//Init_Buffer(p_TWI_Buffer, 25, 25);
+	Ring_Buffer TWI_Buffer;
+	Ring_Buffer* p_TWI_Buffer = &TWI_Buffer; 
+	
+	TWI_Buffer_Enabled = true;
+	
+	Init_Buffer(p_TWI_Buffer, 25, 25);
 	
 	//TWI_Add_W_To_Queue(p_TWI_Buffer, MCP23017_Address, 0x01, 0b11111111);// Non imperative TWI operations. Only allowable under a certain speed.
 	//TWI_Add_R_To_Queue(p_TWI_Buffer, MCP23017_Address, 0x13, &Received_Data);
@@ -79,9 +92,9 @@ int main(void)
 	
 	while(1){
 		
-		//if(TWI_Buffer_Enabled && Current_Speed <= 20 && !IsEmpty(p_TWI_Buffer)){
-			//Fetch_TWI(p_TWI_Buffer);
-		//}
+		if(TWI_Buffer_Enabled && Current_Speed <= 20 && !IsEmpty(p_TWI_Buffer) && Next_I2C_State == TWI_IDLE){
+			Fetch_TWI(p_TWI_Buffer);
+		}
 
 		
 	}

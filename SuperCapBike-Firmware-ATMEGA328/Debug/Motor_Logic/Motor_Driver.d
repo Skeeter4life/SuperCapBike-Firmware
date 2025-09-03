@@ -1,5 +1,5 @@
-I2C/TWI_Driver.d I2C/TWI_Driver.o: ../I2C/TWI_Driver.c \
- ../I2C/../Headers/Includes.h \
+Motor_Logic/Motor_Driver.d Motor_Logic/Motor_Driver.o: \
+ ../Motor_Logic/Motor_Driver.c ../Motor_Logic/../Headers/Includes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
@@ -15,10 +15,13 @@ I2C/TWI_Driver.d I2C/TWI_Driver.o: ../I2C/TWI_Driver.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../I2C/../Headers/I2C.h ../I2C/../Headers/../Headers/Includes.h \
- ../I2C/../Headers/Timer_Counter.h ../I2C/../Headers/Includes.h
+ ../Motor_Logic/../Headers/I2C.h \
+ ../Motor_Logic/../Headers/../Headers/Includes.h \
+ ../Motor_Logic/../Headers/Motor_Driver.h \
+ ../Motor_Logic/../Headers/Timer_Counter.h \
+ ../Motor_Logic/../Headers/Includes.h
 
-../I2C/../Headers/Includes.h:
+../Motor_Logic/../Headers/Includes.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
 
@@ -50,10 +53,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-../I2C/../Headers/I2C.h:
+../Motor_Logic/../Headers/I2C.h:
 
-../I2C/../Headers/../Headers/Includes.h:
+../Motor_Logic/../Headers/../Headers/Includes.h:
 
-../I2C/../Headers/Timer_Counter.h:
+../Motor_Logic/../Headers/Motor_Driver.h:
 
-../I2C/../Headers/Includes.h:
+../Motor_Logic/../Headers/Timer_Counter.h:
+
+../Motor_Logic/../Headers/Includes.h:

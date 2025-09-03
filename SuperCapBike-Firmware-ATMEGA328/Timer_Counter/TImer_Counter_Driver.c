@@ -110,6 +110,8 @@ static Timer_Status Set_Prescaler(Timers Timer, uint16_t Prescaler){
 		
 		case _16_bit:
 		
+			TCCR1B &= ~((1 << CS12) | (1 << CS11) | (1 << CS10)); // Clear previous prescaler bits
+				
 			switch(Prescaler){ // Don't need to clear TCCRxB, as it will be assigned:
 				
 				case 1:
@@ -118,7 +120,7 @@ static Timer_Status Set_Prescaler(Timers Timer, uint16_t Prescaler){
 					break;
 				
 				case 8:
-				
+					
 					TCCR1B |= (1 << CS11);
 					break;
 				
@@ -146,6 +148,8 @@ static Timer_Status Set_Prescaler(Timers Timer, uint16_t Prescaler){
 			break;
 		
 		case _8_bit1:
+		
+			TCCR0B &= ~((1 << CS02) | (1 << CS01) | (1 << CS00));
 		
 			switch(Prescaler){
 				
@@ -183,6 +187,8 @@ static Timer_Status Set_Prescaler(Timers Timer, uint16_t Prescaler){
 			break;
 		
 		case _8_bit2:
+		
+			TCCR2B &= ~((1 << CS22) | (1 << CS21) | (1 << CS20));
 		
 			switch(Prescaler){
 				
@@ -435,8 +441,8 @@ static void Reset_Timer_If_CTC(void) {
 			if(Timer_Mode[_16_bit] == TIMER_CTC){
 				
 				TIMSK1 = 0; // Disable all timer interrupts
-				TCCR1A = 0;
-				TCCR1B = 0;
+				//TCCR1A = 0; -> MUST BE PROPERLY OVERWRITTEN
+				//TCCR1B = 0;
 				
 			}
 			
@@ -447,8 +453,8 @@ static void Reset_Timer_If_CTC(void) {
 			if(Timer_Mode[_8_bit1] == TIMER_CTC){
 				
 				TIMSK0 = 0;
-				TCCR0A = 0;
-				TCCR0B = 0;
+				//TCCR0A = 0;
+				//TCCR0B = 0;
 				
 			}
 			
@@ -459,8 +465,8 @@ static void Reset_Timer_If_CTC(void) {
 			if(Timer_Mode[_8_bit2] == TIMER_CTC){
 				
 				TIMSK2 = 0;
-				TCCR2A = 0;
-				TCCR2B = 0;
+				//TCCR2A = 0;
+				//TCCR2B = 0;
 				
 			}
 			
@@ -469,7 +475,7 @@ static void Reset_Timer_If_CTC(void) {
 	
 }
 
-Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable freq. variable duty %, except for 16 bit timer.
+Timer_Status Toggle_PWM(PWM_Setup* PWM, PWM_States PWM_State) { // Hardware is incapable of variable freq. variable duty %, except for 16 bit timer.
 	
 	switch(PWM->Pin){ // I repeat myself seemingly a fair bit here, but the only way the timer is known, without having to pass the timer, is by knowing which pin it is.
 		
@@ -477,9 +483,29 @@ Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable fre
 			
 			Selected_Timer = _16_bit;
 			
-			Reset_Timer_If_CTC();
-			
-			TCCR1A |= (1 << COM1A1); // Non inverting phase correct PWM
+			switch(PWM_State){
+				
+				case ON:
+				
+					Reset_Timer_If_CTC();
+					
+					TCCR1A &= ~((1 << COM1A1) | (1 << COM1A0) | (1 << WGM11) | (1 << WGM10)); // Clear previous compare modes and wgm modes:
+					TCCR1B &= ~((1 << WGM13) | (1 << WGM12));
+					
+					TCCR1A |= ((1 << COM1A1) | (1 << WGM10)); // PWM mode 1, phase correct, 8 bit 
+					
+					break;
+					
+				case OFF:
+				
+					TCCR1A &= ~(1 << COM1A1); // Restore normal port operation for this pin
+					
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+				}
 		
 			break;
 		
@@ -487,19 +513,61 @@ Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable fre
 			
 			Selected_Timer = _16_bit;
 			
-			Reset_Timer_If_CTC();
-			
-			TCCR1A |= (1 << COM1B1);
+			switch(PWM_State){
+				
+				case ON:
+				
+					Reset_Timer_If_CTC();
+				
+					TCCR1A &= ~((1 << COM1B1) | (1 << COM1B0) | (1 << WGM11) | (1 << WGM10)); // Clear compare & WGM bits
+					TCCR1B &= ~((1 << WGM13) | (1 << WGM12));                                // Clear WGM bits in TCCR1B
+
+					TCCR1A |= (1 << COM1B1) | (1 << WGM10); // Non-inverting, Phase Correct PWM, 8-bit
+				
+					break;
+				
+				case OFF:
+				
+					TCCR1A &= ~(1 << COM1B1); 
+				
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
 			
 			break;
 		
 		case PD5_OC0B:
 			
 			Selected_Timer = _8_bit1;
-			
-			Reset_Timer_If_CTC();
-		
-			TCCR0A |= (1 << COM0B1);
+						
+			switch(PWM_State){
+				
+				case ON:
+				
+					Reset_Timer_If_CTC();
+					
+					TCCR0A &= ~((1 << COM0B1) | (1 << COM0B0) | (1 << WGM01) | (1 << WGM00)); // Clear compare & WGM bits
+
+					TCCR0A |= (1 << COM0B1) | (1 << WGM00); // Non-inverting, Phase Correct PWM
+
+				
+					break;
+				
+				case OFF:
+				
+					TCCR0A &= ~(1 << COM0B1);
+				
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
 			
 			break;
 		
@@ -507,9 +575,28 @@ Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable fre
 		
 			Selected_Timer = _8_bit1;
 			
-			Reset_Timer_If_CTC();
+			switch(PWM_State){
 				
-			TCCR0A |= (1 << COM0A1);
+				case ON:
+				
+					Reset_Timer_If_CTC();
+					
+					TCCR0A &= ~((1 << COM0A1) | (1 << COM0A0) | (1 << WGM01) | (1 << WGM00));
+					TCCR0A |= (1 << COM0A1) | (1 << WGM00);
+
+					break;
+				
+				case OFF:
+				
+					TCCR0A &= ~(1 << COM0A1);
+				
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
 			
 			break;
 		
@@ -517,63 +604,80 @@ Timer_Status Init_PWM(PWM_Setup* PWM) { // Hardware is incapable of variable fre
 			
 			Selected_Timer = _8_bit2;
 			
-			Reset_Timer_If_CTC();
-		
-			TCCR2A |= (1 << COM2A1);
-			
+			switch(PWM_State){
+				
+				case ON:
+				
+					Reset_Timer_If_CTC();
+				
+					TCCR2A &= ~((1 << COM2A1) | (1 << COM2A0) | (1 << WGM21) | (1 << WGM20)); // Clear compare & WGM bits
+
+					TCCR2A |= (1 << COM2A1) | (1 << WGM20); // Non-inverting, Phase Correct PWM
+				
+					break;
+				
+				case OFF:
+				
+					TCCR2A &= ~(1 << COM2A1);
+				
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
+					
 			break;
 		
 		case PD3_OC2B:
 		
 			Selected_Timer = _8_bit2;
 			
-			Reset_Timer_If_CTC();
-					
-			TCCR2A |= (1 << COM2B1);
-			
-			break;
-		
-		default:
-		
-			return TIMER_FAULT;
-		
-	}
-
-	switch(Selected_Timer) {
-		
-		case _16_bit:	
-			
-			// PWM Mode 10: Phase correct, variable freq & duty cycle
-			TCCR1A |= (1 << WGM11);
-			//TCCR1B |= (1 << WGM13);
-			
-			ICR1H = (uint8_t)(PWM->ICR >> 8); // A new style of doing this. Is this more clear? I think so.
-			ICR1L = (uint8_t)(PWM->ICR);
-			
-			break;
-		
-		case  _8_bit1:
+			switch(PWM_State){
 				
-			TCCR0A |= (1 << WGM00); // Phase correct PWM
-			//TCCR0B |= (1 << WGM02); 
-		
-			break;
-		
-		case _8_bit2:
-			
-			TCCR2A |= (1 << WGM20); // Phase correct PWM
-			//TCCR2B |= (1 << WGM22);
+				case ON:
+				
+					Reset_Timer_If_CTC();
+				
+					TCCR2A &= ~((1 << COM2B1) | (1 << COM2B0) | (1 << WGM21) | (1 << WGM20)); // Clear compare & WGM bits
+
+					TCCR2A |= (1 << COM2B1) | (1 << WGM20); // Non-inverting, Phase Correct PWM
+				
+					break;
+				
+				case OFF:
+				
+					TCCR2A &= ~(1 << COM2B1);
+				
+					break;
+				
+				default:
+				
+					return TIMER_FAULT;
+					
+			}
 			
 			break;
 		
 		default:
 		
 			return TIMER_FAULT;
-	
+		
 	}
 	
-	Timer_Mode[Selected_Timer] = TIMER_PWM;
+	if(PWM_State == ON){
+		
+		Timer_Mode[Selected_Timer] = TIMER_PWM;
+		
+	}else{
+		
+		Timer_Mode[Selected_Timer] = TIMER_NONE;
+		
+	}
+	
 	Timer_Unit[Selected_Timer] = Invalid;
+	
 	return TIMER_OK;
 	
 }
@@ -588,14 +692,14 @@ Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycl
 		
 		case PB1_OC1A:
 		
-			OCR1A = (Duty_Cycle * 65535 + 50) / 100;
+			OCR1A = (Duty_Cycle * 255 + 50) / 100; // Reduced to 8 bit
 			Selected_Timer = _16_bit;
 		
 			break;
 		
 		case PB2_OC1B:
 		
-			OCR1B = (Duty_Cycle * 65535 + 50) / 100;
+			OCR1B = (Duty_Cycle * 255 + 50) / 100;
 			Selected_Timer = _16_bit;
 		
 			break;
@@ -643,7 +747,6 @@ Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycl
 	return TIMER_OK;
 	
 }
-
 
 /* CONFIGURE TIMER FUNCTION
 
@@ -701,11 +804,16 @@ Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycl
 	
 	1) When switching between a timer for CTC or PWM, the timer mode will automatically be updated
 	2) Only with the 16 bit timer can PWM frequency and duty cycle be modified (Due the the hardware). Only duty cycle can be changed with the 8 bit timer.
-	3) The PWM is restricted to phase correct mode. I may add functionality for both, to make it a true driver, but for my case (driving a motor) phase correct is optimal.
+	3) The PWM is restricted to phase correct mode. I may add functionality for both.
+	4) To optimize program execution, Configure_PWM() is not automatically called each time the PWM is toggled ON
 	
 	EDGE CASES:
 	
+	1) When toggling one PWM pin, both timer ports are briefly interrupted
+	
 	POTENTIAL FIXES:
+	
+	1) Add additional logic
 	
 */
 

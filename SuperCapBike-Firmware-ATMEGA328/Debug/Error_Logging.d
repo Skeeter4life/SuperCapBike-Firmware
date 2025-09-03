@@ -1,5 +1,5 @@
-I2C/TWI_Driver.d I2C/TWI_Driver.o: ../I2C/TWI_Driver.c \
- ../I2C/../Headers/Includes.h \
+Error_Logging.d Error_Logging.o: .././Error_Logging.c \
+ .././Headers/Includes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
@@ -15,10 +15,11 @@ I2C/TWI_Driver.d I2C/TWI_Driver.o: ../I2C/TWI_Driver.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../I2C/../Headers/I2C.h ../I2C/../Headers/../Headers/Includes.h \
- ../I2C/../Headers/Timer_Counter.h ../I2C/../Headers/Includes.h
+ .././Headers/I2C.h .././Headers/../Headers/Includes.h \
+ .././Headers/Dynamic_Ring_Buffer.h .././Headers/../Headers/I2C.h \
+ .././Headers/EEPROM.h .././Headers/Includes.h
 
-../I2C/../Headers/Includes.h:
+.././Headers/Includes.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h:
 
@@ -50,10 +51,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-../I2C/../Headers/I2C.h:
+.././Headers/I2C.h:
 
-../I2C/../Headers/../Headers/Includes.h:
+.././Headers/../Headers/Includes.h:
 
-../I2C/../Headers/Timer_Counter.h:
+.././Headers/Dynamic_Ring_Buffer.h:
 
-../I2C/../Headers/Includes.h:
+.././Headers/../Headers/I2C.h:
+
+.././Headers/EEPROM.h:
+
+.././Headers/Includes.h:

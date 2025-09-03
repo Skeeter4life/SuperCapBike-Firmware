@@ -6,6 +6,8 @@ EEPROM\EEPROM.c
 
 EEPROM\EEPROM_Driver.S
 
+Error_Logging.c
+
 I2C\TWI_Driver.c
 
 main.c

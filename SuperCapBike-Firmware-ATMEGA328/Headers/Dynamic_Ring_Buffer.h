@@ -82,5 +82,6 @@ extern Ring_Buffer_Status IsEmpty(Ring_Buffer* Buffer);
 
 extern bool TWI_Buffer_Enabled;
 
+extern Ring_Buffer* p_TWI_Buffer;
 
 #endif /* DYNAMIC_RING_BUFFER_H_ */

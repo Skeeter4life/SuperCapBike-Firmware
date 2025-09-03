@@ -59,13 +59,20 @@ typedef struct PWM_Setup{
 	
 	Pins Pin;
 	
-	uint16_t ICR; // Only for 16_bit timer.
+	// uint16_t ICR; // Only for 16_bit timer.
 	
 }PWM_Setup;
 
+typedef enum PWM_States{
+	OFF,
+	ON
+}PWM_States;
+
 extern Timer_Status Configure_Timer(uint16_t Step, Timer_Units Unit, Timers Selected_Timer);
-extern Timer_Status Init_PWM(PWM_Setup* PWM);
+extern Timer_Status Toggle_PWM(PWM_Setup* PWM, PWM_States PWM_State);
 extern Timer_Status Configure_PWM(PWM_Setup* PWM, uint16_t Prescaler, uint8_t Duty_Cycle);
+
+extern const Timers Global_Timer;
 
 extern Timer_Modes Timer_Mode[3];
 extern Timer_Units Timer_Unit[3];

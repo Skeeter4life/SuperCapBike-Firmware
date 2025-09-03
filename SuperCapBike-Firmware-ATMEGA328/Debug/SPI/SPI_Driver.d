@@ -15,7 +15,6 @@ SPI/SPI_Driver.d SPI/SPI_Driver.o: ../SPI/SPI_Driver.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../SPI/../Headers/Timer_Counter.h ../SPI/../Headers/Includes.h \
  ../SPI/../Headers/SPI.h
 
 ../SPI/../Headers/Includes.h:
@@ -49,9 +48,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
-
-../SPI/../Headers/Timer_Counter.h:
-
-../SPI/../Headers/Includes.h:
 
 ../SPI/../Headers/SPI.h:

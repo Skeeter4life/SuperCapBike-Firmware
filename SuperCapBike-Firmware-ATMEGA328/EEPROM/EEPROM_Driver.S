@@ -9,6 +9,8 @@
  .global EEPROM_Read
  .global EEPROM_Write
 
+ .extern EEPROM_enabled
+
  #define Address_H r25
  #define Address_L r24
  #define EEPROM_Data r22
@@ -62,6 +64,12 @@ EEPROM_Wait:
 	RET 
 
 Check_EEPROM_State:
+
+	LDS r19, EEPROM_Enabled
+
+	CPI r19, 0
+
+	BREQ EEPROM_Ready_ERROR
 
 	SBIC EECR, 1 ; Ensure EEPROM is not being written to
 	

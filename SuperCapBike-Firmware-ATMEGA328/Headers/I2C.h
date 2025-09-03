@@ -72,7 +72,7 @@ typedef struct TWI_Data{
 }TWI_Data;
 
 extern TWI_Status TWI_Write(uint8_t Device_Address, uint8_t Register_Address, uint8_t Data); // I don't want to initialize a struct going into it
-extern TWI_Status TWI_Read(uint8_t Device_Address, uint8_t Register_Address, uint8_t* Data_Out, void (*Callback)(void));
+extern TWI_Status TWI_Read(uint8_t Device_Address, uint8_t Register_Address, volatile uint8_t* Data_Out, void (*Callback)(void));
 
 extern volatile TWI_States Next_I2C_State;
 extern volatile TWI_Status I2C_Status;

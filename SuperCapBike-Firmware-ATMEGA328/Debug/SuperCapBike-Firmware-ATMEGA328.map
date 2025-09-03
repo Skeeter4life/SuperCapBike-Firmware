@@ -4,10 +4,6 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
                               Timer_Counter/Timer_Counter_Driver.o (__mulsi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
                               Timer_Counter/Timer_Counter_Driver.o (__divmodhi4)
-c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
-                              Timer_Counter/Timer_Counter_Driver.o (__divmodsi4)
-c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
-                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o) (__negsi2)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
@@ -17,7 +13,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
                               EEPROM/EEPROM.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
-                              Timer_Counter/Timer_Counter_Driver.o (__muluhisi3)
+                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o) (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
                               Timer_Counter/Timer_Counter_Driver.o (__muldi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
@@ -36,8 +32,6 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
                               Motor_Logic/Motor_Driver.o (__cmpdi2)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o) (__udivmodhi4)
-c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o) (__udivmodsi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o) (__umulhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
@@ -55,10 +49,14 @@ Allocating common symbols
 Common symbol       size              file
 
 Status              0x1               Motor_Logic/Motor_Driver.o
+IN_2                0x1               Motor_Logic/Motor_Driver.o
 __brkval            0x2               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
-TWI_Codes           0x1               I2C/TWI_Driver.o
+IN_1                0x1               Motor_Logic/Motor_Driver.o
+p_TWI_Buffer        0x2               main.o
+TWI_Codes           0x1               Error_Logging.o
 __flp               0x2               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
 SPI_Config          0x1               SPI/SPI_Driver.o
+IN_3                0x1               Motor_Logic/Motor_Driver.o
 
 Discarded input sections
 
@@ -67,31 +65,22 @@ Discarded input sections
  .text          0x00000000        0x0 EEPROM/EEPROM.o
  .data          0x00000000        0x0 EEPROM/EEPROM.o
  .bss           0x00000000        0x0 EEPROM/EEPROM.o
- .text          0x00000000       0x52 EEPROM/EEPROM_Driver.o
  .data          0x00000000        0x0 EEPROM/EEPROM_Driver.o
  .bss           0x00000000        0x0 EEPROM/EEPROM_Driver.o
- .debug_line    0x00000000      0x137 EEPROM/EEPROM_Driver.o
- .debug_info    0x00000000       0xa4 EEPROM/EEPROM_Driver.o
- .debug_abbrev  0x00000000       0x14 EEPROM/EEPROM_Driver.o
- .debug_aranges
-                0x00000000       0x20 EEPROM/EEPROM_Driver.o
+ .text          0x00000000        0x0 Error_Logging.o
+ .data          0x00000000        0x0 Error_Logging.o
+ .bss           0x00000000        0x0 Error_Logging.o
+ COMMON         0x00000000        0x1 Error_Logging.o
  .text          0x00000000        0x0 I2C/TWI_Driver.o
  .data          0x00000000        0x0 I2C/TWI_Driver.o
  .bss           0x00000000        0x0 I2C/TWI_Driver.o
- COMMON         0x00000000        0x1 I2C/TWI_Driver.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
  .rodata.F_CLK  0x00000000        0x4 main.o
- .rodata.TC_CLK
-                0x00000000        0x4 main.o
- .rodata.Global_Timer
-                0x00000000        0x1 main.o
  .text          0x00000000        0x0 Motor_Logic/Motor_Driver.o
  .data          0x00000000        0x0 Motor_Logic/Motor_Driver.o
  .bss           0x00000000        0x0 Motor_Logic/Motor_Driver.o
- .bss.Current_Speed
-                0x00000000        0x1 Motor_Logic/Motor_Driver.o
  .bss.Switching_State
                 0x00000000        0x1 Motor_Logic/Motor_Driver.o
  .text.Switch_Accumulator_State
@@ -99,35 +88,10 @@ Discarded input sections
  .text          0x00000000        0x0 Ring_Buffer/Dynamic_Ring_Buffer.o
  .data          0x00000000        0x0 Ring_Buffer/Dynamic_Ring_Buffer.o
  .bss           0x00000000        0x0 Ring_Buffer/Dynamic_Ring_Buffer.o
- .bss.TWI_Buffer_Enabled
-                0x00000000        0x1 Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.Init_Buffer
-                0x00000000       0xe4 Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.Increase_Buffer
-                0x00000000       0xd6 Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.IsEmpty  0x00000000       0x44 Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.Write_to_Buffer
-                0x00000000      0x152 Ring_Buffer/Dynamic_Ring_Buffer.o
  .text.Free_Buffer
                 0x00000000       0x3e Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.Read_from_Buffer
-                0x00000000      0x19c Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.TWI_Add_W_To_Queue
-                0x00000000       0xde Ring_Buffer/Dynamic_Ring_Buffer.o
  .text.TWI_Add_R_To_Queue
                 0x00000000       0xea Ring_Buffer/Dynamic_Ring_Buffer.o
- .text.Fetch_TWI
-                0x00000000      0x168 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_info    0x00000000      0x629 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_abbrev  0x00000000      0x169 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_loc     0x00000000      0x282 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_aranges
-                0x00000000       0x60 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_ranges  0x00000000       0x50 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_line    0x00000000      0x682 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_str     0x00000000      0x536 Ring_Buffer/Dynamic_Ring_Buffer.o
- .comment       0x00000000       0x31 Ring_Buffer/Dynamic_Ring_Buffer.o
- .debug_frame   0x00000000      0x134 Ring_Buffer/Dynamic_Ring_Buffer.o
  .text          0x00000000        0x0 SPI/SPI_Driver.o
  .data          0x00000000        0x0 SPI/SPI_Driver.o
  .bss           0x00000000        0x0 SPI/SPI_Driver.o
@@ -151,18 +115,11 @@ Discarded input sections
  .text          0x00000000        0x0 Timer_Counter/Timer_Counter_Driver.o
  .data          0x00000000        0x0 Timer_Counter/Timer_Counter_Driver.o
  .bss           0x00000000        0x0 Timer_Counter/Timer_Counter_Driver.o
- .bss.Timer_Step
-                0x00000000        0x6 Timer_Counter/Timer_Counter_Driver.o
  .rodata.Max_ISR_Cycles
                 0x00000000        0x1 Timer_Counter/Timer_Counter_Driver.o
- .rodata        0x00000000        0xa Timer_Counter/Timer_Counter_Driver.o
- .text.Configure_Timer
-                0x00000000      0x82e Timer_Counter/Timer_Counter_Driver.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
- .text.libgcc.mul
-                0x00000000       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
@@ -188,34 +145,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text.libgcc.fixed
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
- .text.libgcc.fixed
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -296,8 +225,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
- .text.libgcc.mul
-                0x00000000       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
@@ -312,8 +239,6 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
- .text.libgcc.mul
-                0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
@@ -330,8 +255,6 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
- .text.libgcc.div
-                0x00000000       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
@@ -346,8 +269,6 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
- .text.libgcc.div
-                0x00000000       0xa2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
@@ -367,8 +288,6 @@ Discarded input sections
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
- .text.libgcc.builtins
-                0x00000000       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.fmul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
  .text.libgcc.fixed
@@ -380,7 +299,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
- .text.libgcc   0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
  .text.libgcc.builtins
@@ -411,7 +329,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_cmpdi2.o)
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_cmpdi2.o)
- .text.libgcc   0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_cmpdi2.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_cmpdi2.o)
  .text.libgcc.builtins
@@ -434,20 +351,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc.mul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
- .text.libgcc.fixed
-                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
@@ -463,23 +366,13 @@ Discarded input sections
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
- .data          0x00000000        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
- .text.avr-libc
-                0x00000000      0x242 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
- .comment       0x00000000       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
- COMMON         0x00000000        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
- .text.avr-libc
-                0x00000000      0x18c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
- .comment       0x00000000       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
- .text.avr-libc
-                0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
@@ -488,8 +381,6 @@ Discarded input sections
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
- .text.libgcc.prologue
-                0x00000000       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
  .text.libgcc.builtins
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
  .text.libgcc.fmul
@@ -504,8 +395,6 @@ Discarded input sections
  .text.libgcc.div
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
- .text.libgcc.prologue
-                0x00000000       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
  .text.libgcc.builtins
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
  .text.libgcc.fmul
@@ -531,6 +420,7 @@ Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
 LOAD EEPROM/EEPROM.o
 LOAD EEPROM/EEPROM_Driver.o
+LOAD Error_Logging.o
 LOAD I2C/TWI_Driver.o
 LOAD main.o
 LOAD Motor_Logic/Motor_Driver.o
@@ -646,7 +536,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1430
+.text           0x00000000     0x2d96
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
                 0x00000000                __vector_default
@@ -707,7 +597,6 @@ END GROUP
  *(.init9)
  *(.text)
  .text          0x000000b4        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
-                0x000000b4                __vector_1
                 0x000000b4                __vector_12
                 0x000000b4                __bad_interrupt
                 0x000000b4                __vector_6
@@ -720,6 +609,7 @@ END GROUP
                 0x000000b4                __vector_5
                 0x000000b4                __vector_4
                 0x000000b4                __vector_9
+                0x000000b4                __vector_2
                 0x000000b4                __vector_21
                 0x000000b4                __vector_15
                 0x000000b4                __vector_8
@@ -727,84 +617,145 @@ END GROUP
                 0x000000b4                __vector_16
                 0x000000b4                __vector_18
                 0x000000b4                __vector_20
-                0x000000b8                . = ALIGN (0x2)
+ .text          0x000000b8       0x5a EEPROM/EEPROM_Driver.o
+                0x000000e8                EEPROM_Read
+                0x000000fc                EEPROM_Write
+                0x00000112                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_22
-                0x000000b8       0x30 EEPROM/EEPROM.o
-                0x000000b8                __vector_22
+                0x00000112       0x30 EEPROM/EEPROM.o
+                0x00000112                __vector_22
+ .text.Log_Error
+                0x00000142      0x110 Error_Logging.o
+                0x00000142                Log_Error
  .text.__vector_24
-                0x000000e8      0x296 I2C/TWI_Driver.o
-                0x000000e8                __vector_24
+                0x00000252      0x296 I2C/TWI_Driver.o
+                0x00000252                __vector_24
  .text.Start_TWI
-                0x0000037e       0x30 I2C/TWI_Driver.o
-                0x0000037e                Start_TWI
+                0x000004e8       0x32 I2C/TWI_Driver.o
+                0x000004e8                Start_TWI
  .text.TWI_Write
-                0x000003ae       0x3c I2C/TWI_Driver.o
-                0x000003ae                TWI_Write
+                0x0000051a       0x3c I2C/TWI_Driver.o
+                0x0000051a                TWI_Write
  .text.TWI_Read
-                0x000003ea       0x5a I2C/TWI_Driver.o
-                0x000003ea                TWI_Read
- .text.main     0x00000444       0x3a main.o
-                0x00000444                main
- .text.__vector_2
-                0x0000047e       0x78 Motor_Logic/Motor_Driver.o
-                0x0000047e                __vector_2
+                0x00000556       0x5a I2C/TWI_Driver.o
+                0x00000556                TWI_Read
+ .text.main     0x000005b0       0xcc main.o
+                0x000005b0                main
+ .text.__vector_1
+                0x0000067c       0x78 Motor_Logic/Motor_Driver.o
+                0x0000067c                __vector_1
  .text.Update_Commutation
-                0x000004f6      0x182 Motor_Logic/Motor_Driver.o
-                0x000004f6                Update_Commutation
+                0x000006f4      0x2ba Motor_Logic/Motor_Driver.o
+                0x000006f4                Update_Commutation
  .text.Init_Motor
-                0x00000678      0x1aa Motor_Logic/Motor_Driver.o
-                0x00000678                Init_Motor
+                0x000009ae      0x1be Motor_Logic/Motor_Driver.o
+                0x000009ae                Init_Motor
+ .text.Init_Buffer
+                0x00000b6c       0xe4 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00000b6c                Init_Buffer
+ .text.Increase_Buffer
+                0x00000c50       0xd6 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00000c50                Increase_Buffer
+ .text.IsEmpty  0x00000d26       0x44 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00000d26                IsEmpty
+ .text.Write_to_Buffer
+                0x00000d6a      0x152 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00000d6a                Write_to_Buffer
+ .text.Read_from_Buffer
+                0x00000ebc      0x19c Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00000ebc                Read_from_Buffer
+ .text.TWI_Add_W_To_Queue
+                0x00001058       0xde Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00001058                TWI_Add_W_To_Queue
+ .text.Fetch_TWI
+                0x00001136      0x168 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x00001136                Fetch_TWI
  .text.__vector_14
-                0x00000822      0x136 Timer_Counter/Timer_Counter_Driver.o
-                0x00000822                __vector_14
+                0x0000129e      0x136 Timer_Counter/Timer_Counter_Driver.o
+                0x0000129e                __vector_14
  .text.__vector_7
-                0x00000958      0x1b6 Timer_Counter/Timer_Counter_Driver.o
-                0x00000958                __vector_7
+                0x000013d4      0x1b6 Timer_Counter/Timer_Counter_Driver.o
+                0x000013d4                __vector_7
  .text.__vector_11
-                0x00000b0e      0x1c6 Timer_Counter/Timer_Counter_Driver.o
-                0x00000b0e                __vector_11
+                0x0000158a      0x1c6 Timer_Counter/Timer_Counter_Driver.o
+                0x0000158a                __vector_11
  .text.Set_Prescaler
-                0x00000cd4      0x202 Timer_Counter/Timer_Counter_Driver.o
+                0x00001750      0x238 Timer_Counter/Timer_Counter_Driver.o
+ .text.Configure_Timer
+                0x00001988      0x82e Timer_Counter/Timer_Counter_Driver.o
+                0x00001988                Configure_Timer
  .text.Reset_Timer_If_CTC
-                0x00000ed6       0x9a Timer_Counter/Timer_Counter_Driver.o
- .text.Init_PWM
-                0x00000f70      0x1b4 Timer_Counter/Timer_Counter_Driver.o
-                0x00000f70                Init_PWM
+                0x000021b6       0x6a Timer_Counter/Timer_Counter_Driver.o
+ .text.Toggle_PWM
+                0x00002220      0x2da Timer_Counter/Timer_Counter_Driver.o
+                0x00002220                Toggle_PWM
  .text.Configure_PWM
-                0x00001124      0x1de Timer_Counter/Timer_Counter_Driver.o
-                0x00001124                Configure_PWM
- .text.libgcc.div
-                0x00001302       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
-                0x00001302                _div
-                0x00001302                __divmodhi4
- .text.libgcc.div
-                0x0000132a       0x2e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o)
-                0x0000132a                __divmodsi4
- .text.libgcc.div
-                0x00001358       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
-                0x00001358                __negsi2
- .text.libgcc   0x00001368        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x00001368                __tablejump2__
+                0x000024fa      0x1b2 Timer_Counter/Timer_Counter_Driver.o
+                0x000024fa                Configure_PWM
  .text.libgcc.mul
-                0x00001374       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
-                0x00001374                __muluhisi3
- .text.libgcc   0x0000138a       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3_s8.o)
-                0x0000138a                __adddi3_s8
+                0x000026ac       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
+                0x000026ac                __mulsi3
  .text.libgcc.div
-                0x000013a2       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
-                0x000013a2                __udivmodhi4
- .text.libgcc.div
-                0x000013ca       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x000013ca                __udivmodsi4
+                0x000026cc       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
+                0x000026cc                _div
+                0x000026cc                __divmodhi4
+ .text.libgcc   0x000026f4        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x000026f4                __tablejump2__
  .text.libgcc.mul
-                0x0000140e       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                0x0000140e                __umulhisi3
-                0x0000142c                . = ALIGN (0x2)
+                0x00002700       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
+                0x00002700                __muluhisi3
+ .text.libgcc.mul
+                0x00002716       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3.o)
+                0x00002716                __muldi3
+ .text.libgcc.mul
+                0x000027b6       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muldi3_6.o)
+                0x000027b6                __muldi3_6
+ .text.libgcc.div
+                0x000027c8       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
+                0x000027c8                __umoddi3
+                0x000027cc                __udivdi3
+                0x000027ce                __udivdi3_umoddi3
+ .text.libgcc.div
+                0x000027e4       0xa2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
+                0x000027e4                __udivmod64
+ .text.libgcc.builtins
+                0x00002886       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashrdi3.o)
+                0x00002886                __ashrdi3
+                0x0000288a                __lshrdi3
+ .text.libgcc   0x000028c2       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
+                0x000028c2                __adddi3
+ .text.libgcc   0x000028d4       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3_s8.o)
+                0x000028d4                __adddi3_s8
+ .text.libgcc   0x000028ec       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_cmpdi2.o)
+                0x000028ec                __cmpdi2
+ .text.libgcc.div
+                0x000028fe       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+                0x000028fe                __udivmodhi4
+ .text.libgcc.mul
+                0x00002926       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
+                0x00002926                __umulhisi3
+ .text.avr-libc
+                0x00002944      0x242 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x00002944                malloc
+                0x00002a74                free
+ .text.avr-libc
+                0x00002b86      0x18c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
+                0x00002b86                realloc
+ .text.avr-libc
+                0x00002d12       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(memcpy.o)
+                0x00002d12                memcpy
+ .text.libgcc.prologue
+                0x00002d24       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
+                0x00002d24                __prologue_saves__
+ .text.libgcc.prologue
+                0x00002d5c       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
+                0x00002d5c                __epilogue_restores__
+                0x00002d92                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000142c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x0000142c                _exit
-                0x0000142c                exit
+ .fini9         0x00002d92        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00002d92                _exit
+                0x00002d92                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -823,74 +774,113 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000142c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00002d92        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001430                _etext = .
+                0x00002d96                _etext = .
 
-.data           0x00800100       0x1e load address 0x00001430
+.data           0x00800100       0x4c load address 0x00002d96
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
+ .data          0x00800100        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x00800100                __malloc_heap_end
+                0x00800102                __malloc_heap_start
+                0x00800104                __malloc_margin
  *(.data*)
  .data.Next_I2C_State
-                0x00800100        0x1 I2C/TWI_Driver.o
-                0x00800100                Next_I2C_State
+                0x00800106        0x1 I2C/TWI_Driver.o
+                0x00800106                Next_I2C_State
  .data.I2C_Status
-                0x00800101        0x1 I2C/TWI_Driver.o
-                0x00800101                I2C_Status
+                0x00800107        0x1 I2C/TWI_Driver.o
+                0x00800107                I2C_Status
+ .data.Motor_Enabled
+                0x00800108        0x1 Motor_Logic/Motor_Driver.o
+                0x00800108                Motor_Enabled
  .data.Timer_Mode
-                0x00800102        0x3 Timer_Counter/Timer_Counter_Driver.o
-                0x00800102                Timer_Mode
+                0x00800109        0x3 Timer_Counter/Timer_Counter_Driver.o
+                0x00800109                Timer_Mode
  .data.Selected_Timer
-                0x00800105        0x1 Timer_Counter/Timer_Counter_Driver.o
-                0x00800105                Selected_Timer
+                0x0080010c        0x1 Timer_Counter/Timer_Counter_Driver.o
+                0x0080010c                Selected_Timer
  *(.gnu.linkonce.d*)
  *(.rodata)
+ .rodata        0x0080010d       0x10 main.o
+ .rodata        0x0080011d        0x8 Motor_Logic/Motor_Driver.o
+ .rodata        0x00800125        0xa Timer_Counter/Timer_Counter_Driver.o
  *(.rodata*)
+ .rodata.TC_CLK
+                0x0080012f        0x4 main.o
+                0x0080012f                TC_CLK
+ .rodata.Global_Timer
+                0x00800133        0x1 main.o
+                0x00800133                Global_Timer
  .rodata.Commutation_LUT
-                0x00800106       0x18 Motor_Logic/Motor_Driver.o
-                0x00800106                Commutation_LUT
+                0x00800134       0x18 Motor_Logic/Motor_Driver.o
+                0x00800134                Commutation_LUT
  *(.gnu.linkonce.r*)
-                0x0080011e                . = ALIGN (0x2)
-                0x0080011e                _edata = .
-                0x0080011e                PROVIDE (__data_end, .)
+                0x0080014c                . = ALIGN (0x2)
+                0x0080014c                _edata = .
+                0x0080014c                PROVIDE (__data_end, .)
 
-.bss            0x0080011e       0x47
-                0x0080011e                PROVIDE (__bss_start, .)
+.bss            0x0080014c       0x5b
+                0x0080014c                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.EEPROM_Ready
-                0x0080011e        0x1 EEPROM/EEPROM.o
-                0x0080011e                EEPROM_Ready
- .bss.I2C_Data  0x0080011f        0x8 I2C/TWI_Driver.o
-                0x0080011f                I2C_Data
+                0x0080014c        0x1 EEPROM/EEPROM.o
+                0x0080014c                EEPROM_Ready
+ .bss.EEPROM_Address
+                0x0080014d        0x2 EEPROM/EEPROM.o
+                0x0080014d                EEPROM_Address
+ .bss.EEPROM_Enabled
+                0x0080014f        0x1 EEPROM/EEPROM.o
+                0x0080014f                EEPROM_Enabled
+ .bss.I2C_Data  0x00800150        0x8 I2C/TWI_Driver.o
+                0x00800150                I2C_Data
+ .bss.Current_Speed
+                0x00800158        0x1 Motor_Logic/Motor_Driver.o
+                0x00800158                Current_Speed
  .bss.Hall_State
-                0x00800127        0x1 Motor_Logic/Motor_Driver.o
-                0x00800127                Hall_State
+                0x00800159        0x1 Motor_Logic/Motor_Driver.o
+                0x00800159                Hall_State
+ .bss.TWI_Buffer_Enabled
+                0x0080015a        0x1 Ring_Buffer/Dynamic_Ring_Buffer.o
+                0x0080015a                TWI_Buffer_Enabled
  .bss.System_Ticks
-                0x00800128       0x18 Timer_Counter/Timer_Counter_Driver.o
-                0x00800128                System_Ticks
+                0x0080015b       0x18 Timer_Counter/Timer_Counter_Driver.o
+                0x0080015b                System_Ticks
  .bss.Calculated_Ticks
-                0x00800140        0xc Timer_Counter/Timer_Counter_Driver.o
-                0x00800140                Calculated_Ticks
+                0x00800173        0xc Timer_Counter/Timer_Counter_Driver.o
+                0x00800173                Calculated_Ticks
  .bss.Remaining_Ticks
-                0x0080014c        0xc Timer_Counter/Timer_Counter_Driver.o
-                0x0080014c                Remaining_Ticks
+                0x0080017f        0xc Timer_Counter/Timer_Counter_Driver.o
+                0x0080017f                Remaining_Ticks
  .bss.Timer_Unit
-                0x00800158        0xc Timer_Counter/Timer_Counter_Driver.o
-                0x00800158                Timer_Unit
+                0x0080018b        0xc Timer_Counter/Timer_Counter_Driver.o
+                0x0080018b                Timer_Unit
+ .bss.Timer_Step
+                0x00800197        0x6 Timer_Counter/Timer_Counter_Driver.o
+                0x00800197                Timer_Step
  *(COMMON)
- COMMON         0x00800164        0x1 Motor_Logic/Motor_Driver.o
-                0x00800164                Status
-                0x00800165                PROVIDE (__bss_end, .)
-                0x00001430                __data_load_start = LOADADDR (.data)
-                0x0000144e                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080019d        0x2 main.o
+                0x0080019d                p_TWI_Buffer
+ COMMON         0x0080019f        0x4 Motor_Logic/Motor_Driver.o
+                0x0080019f                Status
+                0x008001a0                IN_2
+                0x008001a1                IN_1
+                0x008001a2                IN_3
+ COMMON         0x008001a3        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+                0x008001a3                __brkval
+                0x008001a5                __flp
+                0x008001a7                PROVIDE (__bss_end, .)
+                0x00002d96                __data_load_start = LOADADDR (.data)
+                0x00002de2                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800165        0x0
+.noinit         0x008001a7        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800165                _end = .
-                0x00800165                PROVIDE (__heap_start, .)
+                0x008001a7                _end = .
+                0x008001a7                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -933,10 +923,14 @@ END GROUP
  *(.comment)
  .comment       0x00000000       0x30 EEPROM/EEPROM.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 Error_Logging.o
  .comment       0x00000030       0x31 I2C/TWI_Driver.o
  .comment       0x00000030       0x31 main.o
  .comment       0x00000030       0x31 Motor_Logic/Motor_Driver.o
+ .comment       0x00000030       0x31 Ring_Buffer/Dynamic_Ring_Buffer.o
  .comment       0x00000030       0x31 Timer_Counter/Timer_Counter_Driver.o
+ .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
+ .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(realloc.o)
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x3c
@@ -958,78 +952,101 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x108
+.debug_aranges  0x00000000      0x1a8
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 EEPROM/EEPROM.o
  .debug_aranges
-                0x00000020       0x38 I2C/TWI_Driver.o
+                0x00000020       0x20 EEPROM/EEPROM_Driver.o
  .debug_aranges
-                0x00000058       0x20 main.o
+                0x00000040       0x20 Error_Logging.o
  .debug_aranges
-                0x00000078       0x38 Motor_Logic/Motor_Driver.o
+                0x00000060       0x38 I2C/TWI_Driver.o
  .debug_aranges
-                0x000000b0       0x58 Timer_Counter/Timer_Counter_Driver.o
+                0x00000098       0x20 main.o
+ .debug_aranges
+                0x000000b8       0x38 Motor_Logic/Motor_Driver.o
+ .debug_aranges
+                0x000000f0       0x60 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_aranges
+                0x00000150       0x58 Timer_Counter/Timer_Counter_Driver.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x162d
+.debug_info     0x00000000     0x23cc
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
- .debug_info    0x000005f4       0xa8 EEPROM/EEPROM.o
- .debug_info    0x0000069c      0x31e I2C/TWI_Driver.o
- .debug_info    0x000009ba      0x190 main.o
- .debug_info    0x00000b4a      0x59b Motor_Logic/Motor_Driver.o
- .debug_info    0x000010e5      0x548 Timer_Counter/Timer_Counter_Driver.o
+ .debug_info    0x000005f4       0xdc EEPROM/EEPROM.o
+ .debug_info    0x000006d0       0xa4 EEPROM/EEPROM_Driver.o
+ .debug_info    0x00000774      0x316 Error_Logging.o
+ .debug_info    0x00000a8a      0x318 I2C/TWI_Driver.o
+ .debug_info    0x00000da2      0x467 main.o
+ .debug_info    0x00001209      0x62a Motor_Logic/Motor_Driver.o
+ .debug_info    0x00001833      0x629 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_info    0x00001e5c      0x570 Timer_Counter/Timer_Counter_Driver.o
 
-.debug_abbrev   0x00000000      0xabe
+.debug_abbrev   0x00000000      0xe2f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
  .debug_abbrev  0x000005a2       0x69 EEPROM/EEPROM.o
- .debug_abbrev  0x0000060b      0x105 I2C/TWI_Driver.o
- .debug_abbrev  0x00000710       0x96 main.o
- .debug_abbrev  0x000007a6      0x165 Motor_Logic/Motor_Driver.o
- .debug_abbrev  0x0000090b      0x1b3 Timer_Counter/Timer_Counter_Driver.o
+ .debug_abbrev  0x0000060b       0x14 EEPROM/EEPROM_Driver.o
+ .debug_abbrev  0x0000061f      0x137 Error_Logging.o
+ .debug_abbrev  0x00000756      0x105 I2C/TWI_Driver.o
+ .debug_abbrev  0x0000085b      0x129 main.o
+ .debug_abbrev  0x00000984      0x186 Motor_Logic/Motor_Driver.o
+ .debug_abbrev  0x00000b0a      0x169 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_abbrev  0x00000c73      0x1bc Timer_Counter/Timer_Counter_Driver.o
 
-.debug_line     0x00000000     0x11f2
+.debug_line     0x00000000     0x1cf5
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
  .debug_line    0x00000134       0xae EEPROM/EEPROM.o
- .debug_line    0x000001e2      0x331 I2C/TWI_Driver.o
- .debug_line    0x00000513      0x122 main.o
- .debug_line    0x00000635      0x405 Motor_Logic/Motor_Driver.o
- .debug_line    0x00000a3a      0x7b8 Timer_Counter/Timer_Counter_Driver.o
+ .debug_line    0x000001e2      0x149 EEPROM/EEPROM_Driver.o
+ .debug_line    0x0000032b      0x195 Error_Logging.o
+ .debug_line    0x000004c0      0x331 I2C/TWI_Driver.o
+ .debug_line    0x000007f1      0x19f main.o
+ .debug_line    0x00000990      0x489 Motor_Logic/Motor_Driver.o
+ .debug_line    0x00000e19      0x682 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_line    0x0000149b      0x85a Timer_Counter/Timer_Counter_Driver.o
 
-.debug_frame    0x00000000      0x518
+.debug_frame    0x00000000      0x674
  *(.debug_frame)
  .debug_frame   0x00000000       0x40 EEPROM/EEPROM.o
- .debug_frame   0x00000040       0xdc I2C/TWI_Driver.o
- .debug_frame   0x0000011c       0x34 main.o
- .debug_frame   0x00000150      0x128 Motor_Logic/Motor_Driver.o
- .debug_frame   0x00000278      0x2a0 Timer_Counter/Timer_Counter_Driver.o
+ .debug_frame   0x00000040       0x34 Error_Logging.o
+ .debug_frame   0x00000074       0xdc I2C/TWI_Driver.o
+ .debug_frame   0x00000150       0x34 main.o
+ .debug_frame   0x00000184      0x128 Motor_Logic/Motor_Driver.o
+ .debug_frame   0x000002ac      0x134 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_frame   0x000003e0      0x294 Timer_Counter/Timer_Counter_Driver.o
 
-.debug_str      0x00000000      0x99f
+.debug_str      0x00000000      0xc4b
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328/avr5/crtatmega328.o
- .debug_str     0x00000208      0x17f EEPROM/EEPROM.o
-                                0x1b8 (size before relaxing)
- .debug_str     0x00000387      0x1d6 I2C/TWI_Driver.o
+ .debug_str     0x00000208      0x1a6 EEPROM/EEPROM.o
+                                0x1df (size before relaxing)
+ .debug_str     0x000003ae      0x14f Error_Logging.o
+                                0x363 (size before relaxing)
+ .debug_str     0x000004fd      0x18c I2C/TWI_Driver.o
                                 0x381 (size before relaxing)
- .debug_str     0x0000055d       0x81 main.o
-                                0x26c (size before relaxing)
- .debug_str     0x000005de      0x28b Motor_Logic/Motor_Driver.o
-                                0x5b3 (size before relaxing)
- .debug_str     0x00000869      0x136 Timer_Counter/Timer_Counter_Driver.o
-                                0x41f (size before relaxing)
+ .debug_str     0x00000689      0x10e main.o
+                                0x4ce (size before relaxing)
+ .debug_str     0x00000797      0x22a Motor_Logic/Motor_Driver.o
+                                0x5e9 (size before relaxing)
+ .debug_str     0x000009c1      0x148 Ring_Buffer/Dynamic_Ring_Buffer.o
+                                0x536 (size before relaxing)
+ .debug_str     0x00000b09      0x142 Timer_Counter/Timer_Counter_Driver.o
+                                0x436 (size before relaxing)
 
-.debug_loc      0x00000000      0xb33
+.debug_loc      0x00000000      0xde1
  *(.debug_loc)
  .debug_loc     0x00000000       0x62 EEPROM/EEPROM.o
- .debug_loc     0x00000062      0x1c9 I2C/TWI_Driver.o
- .debug_loc     0x0000022b       0x48 main.o
- .debug_loc     0x00000273      0x297 Motor_Logic/Motor_Driver.o
- .debug_loc     0x0000050a      0x629 Timer_Counter/Timer_Counter_Driver.o
+ .debug_loc     0x00000062       0x48 Error_Logging.o
+ .debug_loc     0x000000aa      0x1c9 I2C/TWI_Driver.o
+ .debug_loc     0x00000273       0x47 main.o
+ .debug_loc     0x000002ba      0x296 Motor_Logic/Motor_Driver.o
+ .debug_loc     0x00000550      0x282 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_loc     0x000007d2      0x60f Timer_Counter/Timer_Counter_Driver.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1049,13 +1066,15 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xb8
+.debug_ranges   0x00000000      0x118
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 EEPROM/EEPROM.o
- .debug_ranges  0x00000010       0x28 I2C/TWI_Driver.o
- .debug_ranges  0x00000038       0x10 main.o
- .debug_ranges  0x00000048       0x28 Motor_Logic/Motor_Driver.o
- .debug_ranges  0x00000070       0x48 Timer_Counter/Timer_Counter_Driver.o
+ .debug_ranges  0x00000010       0x10 Error_Logging.o
+ .debug_ranges  0x00000020       0x28 I2C/TWI_Driver.o
+ .debug_ranges  0x00000048       0x10 main.o
+ .debug_ranges  0x00000058       0x28 Motor_Logic/Motor_Driver.o
+ .debug_ranges  0x00000080       0x50 Ring_Buffer/Dynamic_Ring_Buffer.o
+ .debug_ranges  0x000000d0       0x48 Timer_Counter/Timer_Counter_Driver.o
 
 .debug_macro
  *(.debug_macro)

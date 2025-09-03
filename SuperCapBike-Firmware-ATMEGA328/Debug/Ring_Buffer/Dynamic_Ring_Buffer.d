@@ -17,8 +17,6 @@ Ring_Buffer/Dynamic_Ring_Buffer.d Ring_Buffer/Dynamic_Ring_Buffer.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../Ring_Buffer/../Headers/../Headers/Timer_Counter.h \
- ../Ring_Buffer/../Headers/../Headers/Includes.h \
  ../Ring_Buffer/../Headers/../Headers/I2C.h \
  ../Ring_Buffer/../Headers/../Headers/../Headers/Includes.h
 
@@ -55,10 +53,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
-
-../Ring_Buffer/../Headers/../Headers/Timer_Counter.h:
-
-../Ring_Buffer/../Headers/../Headers/Includes.h:
 
 ../Ring_Buffer/../Headers/../Headers/I2C.h:
 

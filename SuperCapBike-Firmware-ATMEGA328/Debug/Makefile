@@ -45,6 +45,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../EEPROM/EEPROM.c \
+../Error_Logging.c \
 ../I2C/TWI_Driver.c \
 ../main.c \
 ../Motor_Logic/Motor_Driver.c \
@@ -63,6 +64,7 @@ ASM_SRCS +=
 OBJS +=  \
 EEPROM/EEPROM.o \
 EEPROM/EEPROM_Driver.o \
+Error_Logging.o \
 I2C/TWI_Driver.o \
 main.o \
 Motor_Logic/Motor_Driver.o \
@@ -73,6 +75,7 @@ Timer_Counter/Timer_Counter_Driver.o
 OBJS_AS_ARGS +=  \
 EEPROM/EEPROM.o \
 EEPROM/EEPROM_Driver.o \
+Error_Logging.o \
 I2C/TWI_Driver.o \
 main.o \
 Motor_Logic/Motor_Driver.o \
@@ -83,6 +86,7 @@ Timer_Counter/Timer_Counter_Driver.o
 C_DEPS +=  \
 EEPROM/EEPROM.d \
 EEPROM/EEPROM_Driver.d \
+Error_Logging.d \
 I2C/TWI_Driver.d \
 main.d \
 Motor_Logic/Motor_Driver.d \
@@ -93,6 +97,7 @@ Timer_Counter/Timer_Counter_Driver.d
 C_DEPS_AS_ARGS +=  \
 EEPROM/EEPROM.d \
 EEPROM/EEPROM_Driver.d \
+Error_Logging.d \
 I2C/TWI_Driver.d \
 main.d \
 Motor_Logic/Motor_Driver.d \
@@ -115,6 +120,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 EEPROM/EEPROM.o: ../EEPROM/EEPROM.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./Error_Logging.o: .././Error_Logging.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
